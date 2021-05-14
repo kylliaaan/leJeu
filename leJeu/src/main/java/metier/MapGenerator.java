@@ -23,7 +23,6 @@ public class MapGenerator extends JPanel {
 		int map[][] = new int[c.getX()][c.getY()];	
 		for ( int ln = 0; ln < c.getX(); ln++)
 		{
-			
 			for ( int col = 0; col < c.getY(); col++) 
 			{
 				int rc = map[ln][col];
@@ -60,7 +59,7 @@ public static void GeneratorMapPlacement(Carte c,int obstacles[][]) {
 		g.dispose();
 		int tileSize = 32;
 		int map[][] = new int[c.getX()][c.getY()];	
-	//Placement des positions de départ pour choix
+	//Placement des positions de dï¿½part pour choix
 		map[Math.round(c.getX()/2)][2]=1;
 		map[Math.round((c.getX()/2)-1)][2]=1;
 		map[Math.round((c.getX()/2)+1)][3]=1;

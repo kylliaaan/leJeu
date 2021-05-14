@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import frame.Accueil;
 import metier.Attaque;
 import metier.Carte;
+import metier.Fantome;
 import metier.Guerrier;
 import metier.Magicien;
 import metier.MapGenerator;
@@ -23,6 +25,8 @@ public class App {
 	
 	static List<Attaque> attaque1 = new ArrayList();
 	static List<Attaque> attaque2 = new ArrayList();
+	static List<Carte> cartes = new ArrayList();
+	static Carte foret= new Carte("forï¿½t",10,10,10,10);
 	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
     static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
     static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
@@ -76,7 +80,7 @@ public class App {
 //		Compte c=DAOCompte.seConnecter(login, password);
 //		if(c instanceof Compte)
 //		{
-//			String msg=login+" s'est connecté le : "+LocalDateTime.now()+"\n";
+//			String msg=login+" s'est connectï¿½ le : "+LocalDateTime.now()+"\n";
 //			ecrireFichier("connect.txt",msg);
 //			menuJeu();
 //		}
@@ -114,8 +118,8 @@ public class App {
 		int choix =saisieInt("Choix:");
 		switch(choix) 
 		{
-		case 1 : retrouverPartie();jeuSolo();break;
-		case 2 : choixPerso(1);jeuSolo();break;
+		case 1 : retrouverPartie();jeuSolo();menuJeu();break;
+		case 2 : choixPerso(1);jeuSolo();menuJeu();break;
 		case 3 : menuJeu();break;
 		default : menuAventure();break;
 		}
@@ -130,7 +134,7 @@ public class App {
 		int choix =saisieInt("Choix:");
 		switch(choix) 
 		{
-		case 1 : nombreJoueur = 2;choixPerso(1);choixPerso(2);jeuMulti();break;
+		case 1 : nombreJoueur = 2;choixPerso(1);choixPerso(2);Carte carte= new Carte("forï¿½t",10,10,10,10);jeuMulti(carte);menuJeu();break; //Ajouter choix de carte ici
 		case 2 : choixPerso(1);jeuOnline();break;
 		case 3 : menuJeu();break;
 		default : menuMulti();break;
@@ -144,14 +148,14 @@ public class App {
 		System.out.println("Pour le joueur "+perso+":");	
 		System.out.println("1 - Guerrier");
 		System.out.println("2 - Mage");
-		System.out.println("3 - Shrek");
+		System.out.println("3 - Assassin");
 		int choix =saisieInt("Choix:");
-		Personnage fantome=null;
+		Personnage tampon=null;
 		if (choix==1) {
-			fantome = new Guerrier(0,0);
+			tampon = new Guerrier(0,0);
 		}
 		else if (choix==2) {
-			fantome = new Magicien(0,0);
+			tampon = new Magicien(0,0);
 		}
 		else if (choix==3) {
 			System.out.println("Non");
@@ -161,8 +165,8 @@ public class App {
 			choixPerso(perso);
 		}	
 		
-		if (perso==1) {joueur1=fantome;}
-		else if (perso==2) {joueur2=fantome;}
+		if (perso==1) {joueur1=tampon;} 
+		else if (perso==2) {joueur2=tampon;}
 		
 		
 		
@@ -174,25 +178,24 @@ public class App {
 	}
 	
 	public static void jeuSolo() {
-		System.out.println("On a pas encore d'IA déso, ça arrive promis!");
-		menuJeu();
+		for (int niveau=1;niveau <= cartes.size() ;niveau++) {
+			System.out.println("Niveau "+niveau);
+			combatSolo(niveau);
+		}
+		
+		
 	}
 	
-	public static void jeuOnline() {
-		System.out.println("On a pas de online mdr tu t'es cru sur Fortnite?");
-		menuJeu();
-	}
-	
-	public static void jeuMulti() {
-		Carte carte= new Carte("forêt",10,10,10,10);
+	private static void combatSolo(int niveau) {
+		Carte carte = cartes.get(niveau);
 		int obstacles[][]=creerObstacle(carte);
 		int maxPm1=joueur1.getpM();
 		int maxPm2=joueur2.getpM();
-		placer(joueur1,obstacles,carte);
-		placer(joueur2,obstacles,carte);
-		MapGenerator.GeneratorMap(carte,obstacles);
 		int alt=1;
+		joueur2=new Fantome();
+//		MapGenerator.GeneratorMap(carte,obstacles);
 		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
+			afficherCarte(carte,obstacles);
 			if (alt==1) {
 				System.out.println("Joueur 1 :");
 				joueur1.setpM(maxPm1);
@@ -202,17 +205,49 @@ public class App {
 				alt=2;
 			}
 			else {
-				System.out.println("Joueur 2 :");
+				System.out.println("Tour de l'enemi");
 				joueur2.setpM(maxPm2);
 				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
 				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
-				tour(joueur2,obstacles,carte);
+				Fantome.tourFantome(joueur2,joueur1, obstacles,carte);
 				alt=1;
+			}
+		}
+	}
+
+	public static void jeuOnline() {
+		System.out.println("On a pas de online mdr tu t'es cru sur Fortnite?");
+		menuJeu();
+	}
+	
+	public static void jeuMulti(Carte carte) {
+		int obstacles[][]=creerObstacle(carte);
+		placer(joueur1,obstacles,carte);
+		placer(joueur2,obstacles,carte);
+//		MapGenerator.GeneratorMap(carte,obstacles);
+		int alt=1;
+		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
+			if (alt==1) {
+				alt=2;
+				System.out.println("Joueur 1 :");
+				joueur1.setpM(joueur1.getMaxPM());
+				joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
+				if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
+				tour(joueur1,obstacles,carte);
+				
+			}
+			else {
+				alt=1;
+				System.out.println("Joueur 2 :");
+				joueur2.setpM(joueur2.getMaxPM());
+				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
+				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
+				tour(joueur2,obstacles,carte);
 			}
 		}
 		int vainqueur=0;
 		if (joueur1.gethP()<=0&&joueur2.gethP()<=0) {
-			System.out.println("Egalité");
+			System.out.println("Egalitï¿½");
 		}
 		else {
 			if(joueur1.gethP()<=0&&joueur2.gethP()>0) {
@@ -221,26 +256,30 @@ public class App {
 			else if(joueur2.gethP()<=0&&joueur1.gethP()>0) {
 				vainqueur=2;
 			}
-			System.out.println("Joueur "+vainqueur+" a gagné!");
+			System.out.println("Joueur "+vainqueur+" a gagnï¿½!");
 		}
-	}	
+	}
+	
 	
 	private static void tour(Personnage j,int obstacles[][],Carte c) {
-		boolean passer=false;
-		while (passer==false &&	(j.getpA()>0 || j.getpM()>0)) {
-			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se déplacer (PM = "+j.getpM()+") | 3-Passer");
+			System.out.println("tour");
+			if(j.getpA()!=0 && j.getpM()!=0) {
+			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se dï¿½placer (PM = "+j.getpM()+") | 3-Fin du tour");}
+			else if(j.getpA()==0 && j.getpM()!=0) {
+				System.out.println("2-Se dï¿½placer (PM = "+j.getpM()+") | 3-Fin du tour");}
+			else if(j.getpA()!=0 && j.getpM()==0) {
+				System.out.println("1-Attaquer (PA = "+j.getpA()+") | 3-Fin du tour");}
 			int choix = saisieInt("");
 			switch(choix) {
 			case 1 : 
-				if(j.getpA()<=0) {tour(j,obstacles,c);}
-				else{attaquer(j);};break;
+				if(j.getpA()>0) {attaquer(j);}
+				tour(j,obstacles,c);break;
 			case 2 : 
-				if(j.getpM()<=0) {tour(j,obstacles,c);}
-				else{deplacer(j,obstacles,c);};break;	
-			case 3 : passer=true;break;
-			default : tour(j,obstacles,c);break;}
+				if(j.getpM()>0) {deplacer(j,obstacles,c);};
+				tour(j,obstacles,c);break;	
+			case 3 : ;break; //Ne sort pas de tour???
+			default :tour(j,obstacles,c);break;}
 		}
-	}
 
 	private static void deplacer(Personnage j,int obstacles[][],Carte c) {
 		if (j.getpM()<=0) {System.out.println("Pas assez de PM");}
@@ -279,36 +318,76 @@ public class App {
 	}
 
 	private static void attaquer(Personnage j) {
+			List<Attaque> attaques = new ArrayList<Attaque>();	
+			Personnage cible = null;
+			if (j==joueur1) {attaques=attaque1;}
+			else if  (j==joueur2) {attaques=attaque2;}
 			afficherAttaques(j);
 			int choix=saisieInt("");
-			if(j==joueur1) {Attaque.calculDegat(joueur1,joueur2, attaque1.get(choix).getNomAttaque());}
-			if(j==joueur2) {Attaque.calculDegat(joueur2,joueur1, attaque2.get(choix).getNomAttaque());}
-			System.out.println("HP Joueur 1 : "+joueur1.gethP()+" | HP Joueur 2 : "+joueur2.gethP());
+			if(j==joueur1) {cible=joueur2;}
+			else if(j==joueur2) {cible=joueur1;}
+			Attaque.calculDegat(j,cible, attaques.get(choix).getNomAttaque());
+			j.setpA(j.getpA()-attaques.get(choix).getpA());
+			if (nombreJoueur == 2) {
+			System.out.println("HP Joueur 1 : "+joueur1.gethP()+" | HP Joueur 2 : "+joueur2.gethP());}
+			else if (nombreJoueur == 1) {
+				System.out.println("HP Joueur 1 : "+joueur1.gethP()+" | HP Ennemi : "+joueur2.gethP());}
 	}
 
 	private static void afficherAttaques(Personnage j) {
-		if(j==joueur1) {
-			for (int i= 0; i<attaque1.size();i++) {	
-				System.out.println((i+1)+" "+attaque1.get(i).getNomAttaque()+" |type: "+attaque1.get(i).getType()+" |dégats: "+attaque1.get(i).getDegats()+" |PA: "+attaque1.get(i).getpA()+" |portée: "+attaque1.get(i).getRange());
+		List<Attaque> attaques = new ArrayList<Attaque>();	
+		if (j==joueur1) {attaques=attaque1;}
+		else if  (j==joueur2) {attaques=attaque2;}
+		for (int i= 0; i<attaques.size();i++) {	
+				System.out.println((i+1)+" "+attaques.get(i).getNomAttaque()+" |type: "+attaques.get(i).getType()+" |dï¿½gats: "+attaques.get(i).getDegats()+" |PA: "+attaques.get(i).getpA()+" |portï¿½e: "+attaques.get(i).getRange());
 			}
-		}
-		if(j==joueur2) {
-			for (int i= 1; i<attaque2.size();i++) {	
-				System.out.println((i+1)+" "+attaque2.get(i).getNomAttaque()+" |type: "+attaque2.get(i).getType()+" |dégats: "+attaque2.get(i).getDegats()+" |PA: "+attaque2.get(i).getpA()+" |portée: "+attaque2.get(i).getRange());
-			}
-		}
 	}
+	
 
-//	public static void afficherCarte(Carte c) {
-//		int tabCarte[][] = new int[c.getX()][c.getY()];
-//		tabCarte[joueur1.getX()][joueur1.getY()]=1;
-//		if (nombreJoueur==2) {
-//		tabCarte[joueur2.getX()][joueur2.getY()]=2;}
-//		obstacle(c);
-//		for (int[] ligne : tabCarte) {
-//            System.out.println(Arrays.toString(ligne));
-//        }
-//	}
+	public static void afficherCarte(Carte c,int [][] obstacles) {
+		int map[][] = new int[c.getX()][c.getY()];
+		for ( int ln = 0; ln < c.getX(); ln++)
+		{
+			for ( int col = 0; col < c.getY(); col++) 
+			{
+				if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
+				else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+			}	
+		}
+		map[joueur1.getX()][joueur1.getY()]=1;
+		map[joueur2.getX()][joueur2.getY()]=2;
+		for (int[] ligne : map) {
+            System.out.println(Arrays.toString(ligne));
+        }
+	}
+	
+	public static void afficherCartePlacement(Personnage j,Carte c,int [][] obstacles) {
+		int map[][] = new int[c.getX()][c.getY()];
+		if (j==joueur1) {
+			map[Math.round((c.getX()/2)-2)][3]=1;
+			map[Math.round((c.getX()/2)-1)][2]=1;
+			map[Math.round(c.getX()/2)][2]=1;
+			map[Math.round((c.getX()/2)+1)][3]=1;
+		}
+		else if (j==joueur2) {
+			map[Math.round((c.getX()/2)-2)][c.getY()-3]=2;
+			map[Math.round((c.getX()/2)-1)][c.getY()-2]=2;
+			map[Math.round((c.getX()/2))][c.getY()-2]=2;
+			map[Math.round((c.getX()/2)+1)][c.getY()-3]=2;
+		}
+		for ( int ln = 0; ln < c.getX(); ln++)
+		{
+			for ( int col = 0; col < c.getY(); col++) 
+			{
+				if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
+				else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+			}	
+		}
+		for (int[] ligne : map) {
+            System.out.println(Arrays.toString(ligne));
+        }
+	}
+	
 	private static int[][] creerObstacle(Carte c) {
 		int haut = c.getHaut();
 		int bas = c.getBas();
@@ -327,13 +406,14 @@ public class App {
 		return obstacles;
 	}
 
-	public static void placer(Personnage j,int obstacles[][],Carte c) {
-		MapGenerator.GeneratorMapPlacement(c,obstacles);
+	public static void placer(Personnage j,int[][] obstacles,Carte c) {
+//		MapGenerator.GeneratorMapPlacement(c,obstacles);
+		afficherCartePlacement(j,c,obstacles);
 		if (j==joueur1) {
         	System.out.println("Joueur 1 :");}
         else if (j==joueur2) {
         	System.out.println("Joueur 2 :");}
-		int choix =saisieInt("Position de départ?(1/2/3/4)");
+		int choix =saisieInt("Position de dï¿½part?(1/2/3/4)");
 		int x=0;
 		int y=0;
 		if (j==joueur1) {
@@ -360,18 +440,8 @@ public class App {
 	}
 	
 	public static void main(String[] args) {
-//		int cpt=1;
-//		Map<String,Personnage> listPerso = new HashMap();
-//		listPerso.put("joueur"+cpt,new Guerrier(0,0));
-//		cpt++;
-//		listPerso.put("joueur"+cpt,new Magicien(0,0));
-//		cpt++;
-//			
-//		for(int i=1;i<cpt;i++) 
-//		{
-//			System.out.println(listPerso.get("joueur"+i));
-//		}
-		/* attaque1.add(cDP);
+
+		attaque1.add(cDP);
 		attaque2.add(cDP);
 		attaque1.add(cDB);
 		attaque2.add(cDB);
@@ -379,10 +449,16 @@ public class App {
 		attaque2.add(bM);
 		attaque1.add(bDF);
 		attaque2.add(bDF);
-		menuPrincipal(); */
+		cartes.add(foret);
+		menuPrincipal();
 		
-		Accueil ac = new Accueil();
-		ac.setVisible(true);
+//		int obstacles[][]=creerObstacle(foret);
+//		afficherCarte(foret,obstacles);
+		
+		
+//		cartes.add(foret);
+//		Accueil ac = new Accueil();
+//		ac.setVisible(true);
 		
 		
 	} 

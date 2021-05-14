@@ -5,8 +5,8 @@ public class Guerrier extends Personnage
 
 
 
-    public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) {
-        super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA);
+    public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA, int maxPM) {
+        super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA, maxPM);
     }
 
 
@@ -17,9 +17,10 @@ public class Guerrier extends Personnage
         this.attaque = 20;
         this.intelligence = 5;
         this.pA = 8;
-        this.pM = 3;
+        this.pM = 4;
         this.regenPA = 1 ;
         this.maxPA = 10 ;
+        this.maxPM=4;
     }
 
 
