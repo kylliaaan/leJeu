@@ -10,6 +10,8 @@ public class Personnage
 	protected int intelligence; 
 	protected int pA; 
 	protected int pM;
+	protected int regenPA;
+	protected int maxPA;
 
 
 
@@ -19,7 +21,7 @@ public class Personnage
 		this.y = y;
 	}
 
-	public Personnage(int id, int x, int y, int hP, int attaque, int intelligence, int pA, int pM) 
+	public Personnage(int id, int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) 
 	{
 		this.x = x;
 		this.y = y;
@@ -28,6 +30,8 @@ public class Personnage
 		this.intelligence = intelligence;
 		this.pA = pA;
 		this.pM = pM;
+		this.regenPA = regenPA;
+		this.maxPA = maxPA;
 	}
 
 
@@ -118,6 +122,8 @@ public class Personnage
 	public void setpM(int pM) {
 		this.pM = pM;
 	}
+	
+	
 
 	public void setPosition(int x,int y) 
 	{
@@ -128,4 +134,31 @@ public class Personnage
 	public static void seDeplacer()
 	{
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getRegenPA() {
+		return regenPA;
+	}
+
+	public void setRegenPA(int regenPA) {
+		this.regenPA = regenPA;
+	}
+
+	public int getMaxPA() {
+		return maxPA;
+	}
+
+	public void setMaxPA(int maxPA) {
+		this.maxPA = maxPA;
+	}
+	
+	
+	
 }
