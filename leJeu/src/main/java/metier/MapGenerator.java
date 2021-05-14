@@ -15,7 +15,8 @@ public class MapGenerator extends JPanel {
 	Graphics2D g  = (Graphics2D) image.getGraphics();
 	// g.dispose();
 	int tileSize = 32;
-	int x = 0,y = 0;
+	static int x = 0;
+	static int y = 0;
 	int map[][];
 	
 
