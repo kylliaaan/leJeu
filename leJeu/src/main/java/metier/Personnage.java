@@ -1,16 +1,39 @@
 package metier;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="classe_de_perso")
 public class Personnage 
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
+	@Column(name="Position_x",nullable=false)
 	protected int x;
+	@Column(name="Position_y",nullable=false)
 	protected int y;
+	@Column(nullable=false)
 	protected int hP; 
+	@Column(nullable=false)
 	protected int attaque; 
-	protected int intelligence; 
+	@Column(nullable=false)
+	protected int intelligence;
+	@Column(name="Points_action",nullable=false)
 	protected int pA; 
+	@Column(name="Points_mouvement",nullable=false)
 	protected int pM;
+	@Column(name="Régén_pt_action",nullable=false)
 	protected int regenPA;
+	@Column(name="Max_pt_action",nullable=false)
 	protected int maxPA;
 
 

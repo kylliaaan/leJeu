@@ -1,11 +1,27 @@
 package metier;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Objet {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(nullable=false)
 	protected String nomObjet;
+	@Column(nullable=false)
 	protected int hP;
+	@Column(nullable=false)
 	protected int attaque;
+	@Column(nullable=false)
 	protected int intelligence;
+	@Column(name="point_action",nullable=false)
 	protected int pA;
+	@Column(name="point_mouvement",nullable=false)
 	protected int pM;
 	
 	static Objet baton = new Objet("baton",0,10,0,1,0);
