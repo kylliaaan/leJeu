@@ -1,6 +1,7 @@
 package frame;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,53 +16,69 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class NewCompte extends JFrame{
-	private JPasswordField passwordField;
-	private JTextField textField;
-	private JPasswordField passwordField_1;
-	public NewCompte() {
+public class NewCompte {
+	private static JPasswordField passwordField;
+	private static JTextField textField;
+	private static JPasswordField passwordField_1;
+	public static JFrame jf;
+	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	public static JFrame NewCompte() {
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		
+		jf = new JFrame("A LA RECHERCHE DU SOPRA");
+		jf.setBounds(400, 200, 650, 500);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.getContentPane().setLayout(null);
+		
 		
 		JLabel lblNewLabel = new JLabel("Bienvenue jeune Padawan ! ! !");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(99, 11, 264, 25);
-		panel.add(lblNewLabel);
+		lblNewLabel.setBounds(177, 52, 264, 25);
+		jf.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Login : ");
-		lblNewLabel_1.setBounds(21, 63, 49, 14);
-		panel.add(lblNewLabel_1);
+		lblNewLabel_1.setBounds(48, 143, 89, 14);
+		jf.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Password : ");
-		lblNewLabel_2.setBounds(21, 101, 61, 14);
-		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setBounds(48, 183, 125, 14);
+		jf.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_4 = new JLabel("Confirm password : ");
-		lblNewLabel_4.setBounds(21, 140, 105, 14);
-		panel.add(lblNewLabel_4);
+		lblNewLabel_4.setBounds(48, 227, 154, 14);
+		jf.getContentPane().add(lblNewLabel_4);
 		
 		JButton btnNewButton = new JButton("Valider");
-		btnNewButton.setBounds(87, 217, 89, 23);
-		panel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(96, 334, 89, 23);
+		jf.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Annuler");
-		btnNewButton_1.setBounds(233, 217, 89, 23);
-		panel.add(btnNewButton_1);
+		btnNewButton_1.setBounds(434, 334, 89, 23);
+		jf.getContentPane().add(btnNewButton_1);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(139, 98, 96, 20);
-		panel.add(passwordField);
+		passwordField.setBounds(252, 180, 96, 20);
+		jf.getContentPane().add(passwordField);
 		
 		textField = new JTextField();
-		textField.setBounds(139, 60, 96, 20);
-		panel.add(textField);
+		textField.setBounds(252, 140, 96, 20);
+		jf.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(139, 140, 96, 20);
-		panel.add(passwordField_1);
+		passwordField_1.setBounds(252, 224, 96, 20);
+		jf.getContentPane().add(passwordField_1);
+		
+		return jf;
 	}
+
+	
 }

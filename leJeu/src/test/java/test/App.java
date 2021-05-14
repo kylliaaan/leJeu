@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-import frame.Accueil;
+
+import menuPrincipal.Accueil;
 import metier.Attaque;
 import metier.Carte;
 import metier.Guerrier;
@@ -372,8 +373,10 @@ public class App {
 		attaque2.add(bDF);
 		menuPrincipal(); */
 		
-		Accueil ac = new Accueil();
-		ac.setVisible(true);
+		Accueil.Accueil();
+		
+		
+		
 		
 		
 	} 
