@@ -84,5 +84,16 @@ public class Accueil extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(67, 9, 269, 86);
 		panel.add(lblNewLabel);
+		
+		JButton btnNewButton_2 = new JButton("Cr\u00E9er un compte");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewCompte nC = new NewCompte();
+				nC.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton_2.setBounds(21, 229, 129, 23);
+		panel.add(btnNewButton_2);
 	}
 }
