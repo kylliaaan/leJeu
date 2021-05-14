@@ -1,57 +1,35 @@
 package frame;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Aventure extends JFrame {
+public class Aventure{
 
-	private JPanel contentPane;
+	
+	public static JFrame jf;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Aventure frame = new Aventure();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
-	 * Create the frame.
+	 * @wbp.parser.entryPoint
 	 */
-	public Aventure() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	public static JFrame Aventure() {
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 436, 263);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		 
+		jf = new JFrame("A LA RECHERCHE DU SOPRA");
+		jf.setBounds(400, 200, 650, 500);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("AVENTURE : ");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(174, 23, 98, 29);
-		panel.add(lblNewLabel);
+		jf.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Continuer");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -59,29 +37,28 @@ public class Aventure extends JFrame {
 			}
 		});
 		btnNewButton.setBounds(70, 106, 98, 23);
-		panel.add(btnNewButton);
+		jf.add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("Nouvelle Partie");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewGame nG = new NewGame();
-				nG.setVisible(true);
-				dispose();
+				NewGame.NewGame().setVisible(true);
+				jf.dispose();
 			}
 		});
 		btnNewButton_2.setBounds(244, 106, 128, 23);
-		panel.add(btnNewButton_2);
+		jf.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Retour");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChoixModes cM = new ChoixModes();
-				cM.setVisible(true);
-				dispose();
+				ChoixModes.ChoixModes().setVisible(true);;
+				jf.dispose();
 			}
 		});
 		btnNewButton_3.setBounds(337, 229, 89, 23);
-		panel.add(btnNewButton_3);
+		jf.add(btnNewButton_3);
+	return jf;
 	}
 
 }
