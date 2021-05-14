@@ -194,14 +194,16 @@ public class App {
 			if (alt==1) {
 				System.out.println("Joueur 1 :");
 				joueur1.setpM(maxPm1);
-				joueur1.setpA(joueur1.getpA()+2);
+				joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
+				if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
 				tour(joueur1,carte);
 				alt=2;
 			}
 			else {
 				System.out.println("Joueur 2 :");
 				joueur2.setpM(maxPm2);
-				joueur2.setpA(joueur2.getpA()+2);
+				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
+				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
 				tour(joueur2,carte);
 				alt=1;
 			}
@@ -376,6 +378,3 @@ public class App {
 		
 	} 
 }
-	
-	
-
