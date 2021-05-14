@@ -4,6 +4,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import dao.DAOAttaque;
+import dao.DAOObjet;
 import dao.DAOPersonnage;
 import dao.DAOUser;
 
@@ -13,6 +14,7 @@ public class Context {
 	private DAOUser daoUser = new DAOUser();
 	private DAOPersonnage daoPerso = new DAOPersonnage();
 	private DAOAttaque daoAttaque = new DAOAttaque();
+	private DAOObjet daoObjet = new DAOObjet();
 	
 	private static Context _instance=null; 
 	
@@ -59,6 +61,16 @@ public class Context {
 
 	public void setDaoAttaque(DAOAttaque daoAttaque) {
 		this.daoAttaque = daoAttaque;
+	}
+
+
+	public DAOObjet getDaoObjet() {
+		return daoObjet;
+	}
+
+
+	public void setDaoObjet(DAOObjet daoObjet) {
+		this.daoObjet = daoObjet;
 	}
 	
 	

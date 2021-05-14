@@ -3,8 +3,10 @@ package dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import metier.Attaque;
+import metier.User;
 import util.Context;
 
 public class DAOAttaque implements IDAO<Attaque>{
@@ -21,7 +23,12 @@ public class DAOAttaque implements IDAO<Attaque>{
 
 	@Override
 	public List<Attaque> findAll() {
-		return null;
+		EntityManager em = Context.get_instance().getEmf().createEntityManager();
+
+		Query myQuery = em.createQuery("SELECT a from Attaque a",Attaque.class);
+		List<Attaque> attaques=myQuery.getResultList();
+		em.close();
+		return attaques;
 	}
 
 	@Override

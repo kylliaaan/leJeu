@@ -12,10 +12,11 @@ public class Attaque
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name="portee")
 	protected int range;
 	protected String nomAttaque;
 	protected String type;
-	@Column(name="point_Attaque")
+	@Column(name="point_action")
 	protected int pA;
 	protected int degats;
 

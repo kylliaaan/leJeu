@@ -1,11 +1,17 @@
 package metier;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class Carte {
 	protected String img;
 	protected int x;
 	protected int y;
 	private int haut;
 	private int bas;
+	
+	@Enumerated(EnumType.STRING)
+	private Carte_enum ce;
 	
 	public Carte() {
 		super();

@@ -11,7 +11,9 @@ import metier.Carte;
 import metier.Guerrier;
 import metier.Magicien;
 import metier.MapGenerator;
+import metier.Objet;
 import metier.Personnage;
+import metier.User;
 import util.Context;
 
 public class App {
@@ -20,10 +22,12 @@ public class App {
 	
 	static List<Attaque> attaque1 = new ArrayList();
 	static List<Attaque> attaque2 = new ArrayList();
-	static Attaque cDP = new Attaque(1, "coup_de_poing", "physique", 1, 5);
-	static Attaque cDB = new Attaque(1, "coup_de_baton", "physique", 2, 10);
-	static Attaque bM = new Attaque(5, "baguette_magique", "magique",1, 5);
-	static Attaque bDF = new Attaque(8, "boule_de_feu", "magique", 4, 25);
+	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
+	static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
+	static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
+	static Attaque bDF = new Attaque(8, "boule de feu", "magique", 4, 25);
+	static Objet baton = new Objet("baton",0,10,0,1,0);
+	static Objet baguetteMagique = new Objet("baguette magique",0,0,10,2,0);
 	static Personnage joueur1 = null;
 	static Personnage joueur2 = null;
 	static int nombreJoueur = 1;
@@ -55,25 +59,27 @@ public class App {
 		System.out.println("Welcome to the jeu");
 		System.out.println(" ");
 		System.out.println("1 - Se connecter");
-		System.out.println("2 - Quitter");
+		System.out.println("2 - Nouveau compte");
+		System.out.println("3 - Quitter");
 		System.out.println("Choisir un menu");
 		
 		int choix= saisieInt("");
 		switch(choix) 
 		{
-		case 1 : menuJeu();break;
-		case 2 : System.exit(0);break;
+		case 1 : seConnecter();break;
+		case 2 : nouveauCompte();break;
+		case 3 : System.exit(0);break;
 		default : menuPrincipal();break;
 		}
 	}
 
+	
+
 	public static void seConnecter() {
-//		String login =saisieString("Saisir votre login");
-//		String password =saisieString("Saisir votre password");
-//		String login =saisieString("Saisir votre login");
-//		String password =saisieString("Saisir votre password");
-//		Compte c=DAOCompte.seConnecter(login, password);
-//		if(c instanceof Compte)
+		String login =saisieString("Saisir votre login");
+		String password =saisieString("Saisir votre password");
+		User u= Context.get_instance().getDaoUser().checkConnect(login, password);;
+////		if(c instanceof Compte)
 //		{
 //			String msg=login+" s'est connecté le : "+LocalDateTime.now()+"\n";
 //			ecrireFichier("connect.txt",msg);
@@ -85,8 +91,13 @@ public class App {
 //			ecrireFichier("errorConnect.txt",msg);
 //			System.out.println("Identifiants invalides");
 //		}
+		menuJeu();
 	}
 
+	private static void nouveauCompte() {
+		
+	}
+	
 	public static void menuJeu() {
 		System.out.println(" ");
 		System.out.println("1 - Aventure");
@@ -389,6 +400,7 @@ public class App {
 //		Context.get_instance().getDaoUser().save(Kyllian);
 //		Context.get_instance().getDaoUser().save(Louis);
 //		User u = Context.get_instance().getDaoUser().findById(2);
+//		System.out.println(Context.get_instance().getDaoUser().findAll());
 //		System.out.println(u);
 
 //		Context.get_instance().getDaoPerso().save(new Guerrier(0,0));
@@ -397,10 +409,15 @@ public class App {
 //		Context.get_instance().getDaoPerso().save(p);
 //		System.out.println(p+"\n");
 		
-		Context.get_instance().getDaoAttaque().save(cDP);
+//		System.out.println(cDP);
+//		Context.get_instance().getDaoAttaque().save(cDP);
 //		Context.get_instance().getDaoAttaque().save(cDB);
 //		Context.get_instance().getDaoAttaque().save(bM);
 //		Context.get_instance().getDaoAttaque().save(bDF);
+		
+
+//		Context.get_instance().getDaoObjet().save(baton);
+//		Context.get_instance().getDaoObjet().save(baguetteMagique);
 		
 		Context.get_instance().getEmf().close();
 		
