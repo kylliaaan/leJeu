@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class MapGenerator extends JPanel {
 
 
-	public static void GeneratorMap() {
+	public static void GeneratorMap(Carte c) {
 		
 		int WIDTH = 400;
 		int HEIGTH = 400;
@@ -19,48 +19,23 @@ public class MapGenerator extends JPanel {
 		Graphics2D g;
 		g = (Graphics2D) image.getGraphics();
 		g.dispose();
-		int mapWidth = 20;
-		int mapHeigth = 20;
 		int tileSize = 32;
-		int[][] map;
-		map =new int [][] {
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},		
-				{0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-		};
-				
-				
+		int map[][] = new int[c.getX()][c.getY()];	
 		
-		for ( int ln = 0; ln < mapHeigth; ln++)
+		for ( int ln = 0; ln < c.getX(); ln++)
 		{
 			
-			for ( int col = 0; col < mapWidth; col++) 
+			for ( int col = 0; col < c.getY(); col++) 
 			{
 				int rc = map[ln][col];
 
 				switch (rc){
 				case 0:
-					g.setColor(Color.BLACK);
-				    break;
+					g.setColor(Color.GREEN);break;
 				case 1:
-					g.setColor(Color.WHITE);
-				   break;
+					g.setColor(Color.BLUE);break;
+				case 2:
+					g.setColor(Color.RED);break;
 				}
 				
 				g.fillRect(col * tileSize - 1, ln * tileSize - 1, tileSize,tileSize);
