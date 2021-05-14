@@ -12,10 +12,6 @@ public class Magicien extends Personnage
 
 	public Magicien() {}
 	
-    public Magicien(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM)
-    {
-        super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA );
-    }
     
     public Magicien(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) 
     {

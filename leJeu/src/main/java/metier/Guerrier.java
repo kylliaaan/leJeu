@@ -13,9 +13,6 @@ public class Guerrier extends Personnage
 	public Guerrier() {}
 	
 	
-    public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM) {
-        super(id,x, y, hP, attaque, intelligence, pA, pM);
-        
     public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) {
         super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA);
     }
