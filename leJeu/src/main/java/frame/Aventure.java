@@ -64,6 +64,9 @@ public class Aventure extends JFrame {
 		JButton btnNewButton_2 = new JButton("Nouvelle Partie");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				NewGame nG = new NewGame();
+				nG.setVisible(true);
+				dispose();
 			}
 		});
 		btnNewButton_2.setBounds(244, 106, 128, 23);
