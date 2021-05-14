@@ -85,7 +85,7 @@ public class Accueil extends JFrame {
 		lblNewLabel.setBounds(67, 9, 269, 86);
 		panel.add(lblNewLabel);
 		
-		JButton btnNewButton_2 = new JButton("Cr\u00E9er un compte");
+		JButton btnNewButton_2 = new JButton("Creer un compte");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewCompte nC = new NewCompte();
