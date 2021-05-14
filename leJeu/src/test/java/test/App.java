@@ -2,19 +2,15 @@ package test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 
-import frame.Accueil;
 import metier.Attaque;
 import metier.Carte;
 import metier.Guerrier;
 import metier.Magicien;
 import metier.Personnage;
+import util.Context;
 
 public class App {
 
@@ -22,10 +18,10 @@ public class App {
 	
 	static List<Attaque> attaque1 = new ArrayList();
 	static List<Attaque> attaque2 = new ArrayList();
-	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
-    static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
-    static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
-    static Attaque bDF = new Attaque(8, "boule de feu", "magique", 4, 25);
+	static Attaque cDP = new Attaque(1, "coup_de_poing", "physique", 1, 5);
+	static Attaque cDB = new Attaque(1, "coup_de_baton", "physique", 2, 10);
+	static Attaque bM = new Attaque(5, "baguette_magique", "magique",1, 5);
+	static Attaque bDF = new Attaque(8, "boule_de_feu", "magique", 4, 25);
 	static Personnage joueur1 = null;
 	static Personnage joueur2 = null;
 	static int nombreJoueur = 1;
@@ -70,6 +66,8 @@ public class App {
 	}
 
 	public static void seConnecter() {
+//		String login =saisieString("Saisir votre login");
+//		String password =saisieString("Saisir votre password");
 //		String login =saisieString("Saisir votre login");
 //		String password =saisieString("Saisir votre password");
 //		Compte c=DAOCompte.seConnecter(login, password);
@@ -370,8 +368,31 @@ public class App {
 		attaque2.add(bDF);
 		menuPrincipal(); */
 		
-		Accueil ac = new Accueil();
-		ac.setVisible(true);
+//		Accueil ac = new Accueil();
+//		ac.setVisible(true);
+//		User Martin= new User("martin","martin");
+//		User Kyllian= new User("kyllian","kyllian");
+//		User Louis= new User("louis","louis");
+//		Context.get_instance().getDaoUser().save(Martin);
+//		Context.get_instance().getDaoUser().save(Kyllian);
+//		Context.get_instance().getDaoUser().save(Louis);
+//		User u = Context.get_instance().getDaoUser().findById(2);
+//		System.out.println(u);
+
+//		Context.get_instance().getDaoPerso().save(new Guerrier(0,0));
+//		Context.get_instance().getDaoPerso().save(new Magicien(0,0));
+//		Personnage p = Context.get_instance().getDaoPerso().findById(2);
+//		Context.get_instance().getDaoPerso().save(p);
+//		System.out.println(p+"\n");
+		
+		Context.get_instance().getDaoAttaque().save(cDP);
+//		Context.get_instance().getDaoAttaque().save(cDB);
+//		Context.get_instance().getDaoAttaque().save(bM);
+//		Context.get_instance().getDaoAttaque().save(bDF);
+		
+		Context.get_instance().getEmf().close();
+		
+		menuPrincipal();
 		
 		
 	} 
