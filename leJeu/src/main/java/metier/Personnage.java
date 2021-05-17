@@ -35,6 +35,7 @@ public class Personnage
 	protected int regenPA;
 	@Column(name="Max_pt_action",nullable=false)
 	protected int maxPA;
+	protected int maxPM;
 
 
 
@@ -44,7 +45,7 @@ public class Personnage
 		this.y = y;
 	}
 
-	public Personnage(int id, int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) 
+	public Personnage(int id, int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA, int maxPM) 
 	{
 		this.x = x;
 		this.y = y;
@@ -55,6 +56,7 @@ public class Personnage
 		this.pM = pM;
 		this.regenPA = regenPA;
 		this.maxPA = maxPA;
+		this.maxPM= maxPM;
 	}
 
 
@@ -180,6 +182,14 @@ public class Personnage
 
 	public void setMaxPA(int maxPA) {
 		this.maxPA = maxPA;
+	}
+
+	public int getMaxPM() {
+		return maxPM;
+	}
+
+	public void setMaxPM(int maxPM) {
+		this.maxPM = maxPM;
 	}
 	
 	
