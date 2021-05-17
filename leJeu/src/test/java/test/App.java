@@ -13,15 +13,19 @@ import metier.Magicien;
 import metier.MapGenerator;
 import metier.Objet;
 import metier.Personnage;
+import metier.Sauvegarde;
 import metier.User;
 import util.Context;
 
 public class App {
 
-//	static List<Objet> inventaire = new ArrayList();
 	
+	
+	static User user = null;
 	static List<Attaque> attaque1 = new ArrayList();
 	static List<Attaque> attaque2 = new ArrayList();
+	static List<Objet> inventaire1 = new ArrayList();
+	static List<Objet> inventaire2 = new ArrayList();
 	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
 	static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
 	static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
@@ -68,7 +72,7 @@ public class App {
 		{
 		case 1 : seConnecter();break;
 		case 2 : nouveauCompte();break;
-		case 3 : System.exit(0);break;
+		case 3 : Context.get_instance().getEmf().close();System.exit(0);break;
 		default : menuPrincipal();break;
 		}
 	}
@@ -76,26 +80,32 @@ public class App {
 	
 
 	public static void seConnecter() {
-		String login =saisieString("Saisir votre login");
-		String password =saisieString("Saisir votre password");
-		User u= Context.get_instance().getDaoUser().checkConnect(login, password);;
-////		if(c instanceof Compte)
-//		{
-//			String msg=login+" s'est connect� le : "+LocalDateTime.now()+"\n";
+		String login = saisieString("Saisir votre nom d'utilisateur");
+		String password = saisieString("Saisir votre mot de passe");
+		User user = Context.get_instance().getDaoUser().checkConnect(login, password);
+		if(user instanceof User)
+		{
+//			String msg=login+" s'est connecte le : "+LocalDateTime.now()+"\n";
 //			ecrireFichier("connect.txt",msg);
-//			menuJeu();
-//		}
-//		else 
-//		{
+			menuJeu();
+		}
+		else 
+		{
 //			String msg=login+" erreur de connexion le : "+LocalDateTime.now()+"\n";
 //			ecrireFichier("errorConnect.txt",msg);
 //			System.out.println("Identifiants invalides");
-//		}
-		menuJeu();
+			System.out.println("\nIdentifiants invalides.\n");
+			menuPrincipal();
+		}
 	}
 
 	private static void nouveauCompte() {
+		String login = saisieString("Choisissez un nom d'utilisateur");
+		String password = saisieString("Choisissez un mot de passe");
 		
+		User newUser = new User(login,password);
+		Context.get_instance().getDaoUser().save(newUser);
+		menuPrincipal();
 	}
 	
 	public static void menuJeu() {
@@ -184,7 +194,7 @@ public class App {
 	}
 	
 	public static void jeuSolo() {
-		System.out.println("On a pas encore d'IA d�so, �a arrive promis!");
+		System.out.println("On a pas encore d'IA deso, ea arrive promis!");
 		menuJeu();
 	}
 	
@@ -194,7 +204,7 @@ public class App {
 	}
 	
 	public static void jeuMulti() {
-		Carte carte= new Carte("for�t",10,10,10,10);
+		Carte carte= new Carte("foret",10,10,10,10);
 		int obstacles[][]=creerObstacle(carte);
 		int maxPm1=joueur1.getpM();
 		int maxPm2=joueur2.getpM();
@@ -222,7 +232,7 @@ public class App {
 		}
 		int vainqueur=0;
 		if (joueur1.gethP()<=0&&joueur2.gethP()<=0) {
-			System.out.println("Egalit�");
+			System.out.println("Egalite");
 		}
 		else {
 			if(joueur1.gethP()<=0&&joueur2.gethP()>0) {
@@ -231,14 +241,14 @@ public class App {
 			else if(joueur2.gethP()<=0&&joueur1.gethP()>0) {
 				vainqueur=2;
 			}
-			System.out.println("Joueur "+vainqueur+" a gagn�!");
+			System.out.println("Joueur "+vainqueur+" a gagne!");
 		}
 	}	
 	
 	private static void tour(Personnage j,int obstacles[][],Carte c) {
 		boolean passer=false;
 		while (passer==false &&	(j.getpA()>0 || j.getpM()>0)) {
-			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se d�placer (PM = "+j.getpM()+") | 3-Passer");
+			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se deplacer (PM = "+j.getpM()+") | 3-Passer");
 			int choix = saisieInt("");
 			switch(choix) {
 			case 1 : 
@@ -299,12 +309,12 @@ public class App {
 	private static void afficherAttaques(Personnage j) {
 		if(j==joueur1) {
 			for (int i= 0; i<attaque1.size();i++) {	
-				System.out.println((i+1)+" "+attaque1.get(i).getNomAttaque()+" |type: "+attaque1.get(i).getType()+" |d�gats: "+attaque1.get(i).getDegats()+" |PA: "+attaque1.get(i).getpA()+" |port�e: "+attaque1.get(i).getRange());
+				System.out.println((i+1)+" "+attaque1.get(i).getNomAttaque()+" |type: "+attaque1.get(i).getType()+" |degats: "+attaque1.get(i).getDegats()+" |PA: "+attaque1.get(i).getpA()+" |portee: "+attaque1.get(i).getRange());
 			}
 		}
 		if(j==joueur2) {
 			for (int i= 1; i<attaque2.size();i++) {	
-				System.out.println((i+1)+" "+attaque2.get(i).getNomAttaque()+" |type: "+attaque2.get(i).getType()+" |d�gats: "+attaque2.get(i).getDegats()+" |PA: "+attaque2.get(i).getpA()+" |port�e: "+attaque2.get(i).getRange());
+				System.out.println((i+1)+" "+attaque2.get(i).getNomAttaque()+" |type: "+attaque2.get(i).getType()+" |degats: "+attaque2.get(i).getDegats()+" |PA: "+attaque2.get(i).getpA()+" |portee: "+attaque2.get(i).getRange());
 			}
 		}
 	}
@@ -343,7 +353,7 @@ public class App {
         	System.out.println("Joueur 1 :");}
         else if (j==joueur2) {
         	System.out.println("Joueur 2 :");}
-		int choix =saisieInt("Position de d�part?(1/2/3/4)");
+		int choix =saisieInt("Position de depart?(1/2/3/4)");
 		int x=0;
 		int y=0;
 		if (j==joueur1) {
@@ -381,15 +391,24 @@ public class App {
 //		{
 //			System.out.println(listPerso.get("joueur"+i));
 //		}
-		/* attaque1.add(cDP);
-		attaque2.add(cDP);
-		attaque1.add(cDB);
-		attaque2.add(cDB);
-		attaque1.add(bM);
-		attaque2.add(bM);
-		attaque1.add(bDF);
-		attaque2.add(bDF);
-		menuPrincipal(); */
+//		attaque1.add(cDP);
+//		attaque2.add(cDP);
+//		attaque1.add(cDB);
+//		attaque2.add(cDB);
+//		attaque1.add(bM);
+//		attaque2.add(bM);
+//		attaque1.add(bDF);
+//		attaque2.add(bDF);
+		
+//		attaque1.add(Context.get_instance().getDaoAttaque().findById(2));
+//		attaque1.add(Context.get_instance().getDaoAttaque().findById(3));
+//		inventaire1.add(Context.get_instance().getDaoObjet().findById(1));
+//		User u= Context.get_instance().getDaoUser().findById(6);
+////		Context.get_instance().getDaoUser().delete(u);
+//		Magicien m = (Magicien) Context.get_instance().getDaoPerso().findById(2);
+//		Sauvegarde s = new Sauvegarde(u,m,attaque1,objet1);
+//		Context.get_instance().getDaoSauvegarde().save(s);
+//		menuPrincipal(); 
 		
 //		Accueil ac = new Accueil();
 //		ac.setVisible(true);
@@ -414,15 +433,15 @@ public class App {
 //		Context.get_instance().getDaoAttaque().save(cDB);
 //		Context.get_instance().getDaoAttaque().save(bM);
 //		Context.get_instance().getDaoAttaque().save(bDF);
-		
-
+//		
+//
 //		Context.get_instance().getDaoObjet().save(baton);
-//		Context.get_instance().getDaoObjet().save(baguetteMagique);
+//		Context.get_instance().getDaoObjet().save(baguetteMagique);		
+//		System.out.println(Context.get_instance().getDaoObjet().findAll());
 		
-		Context.get_instance().getEmf().close();
 		
 		menuPrincipal();
-		
+		Context.get_instance().getEmf().close();
 		
 	} 
 }

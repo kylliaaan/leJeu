@@ -6,6 +6,7 @@ import javax.persistence.Persistence;
 import dao.DAOAttaque;
 import dao.DAOObjet;
 import dao.DAOPersonnage;
+import dao.DAOSauvegarde;
 import dao.DAOUser;
 
 public class Context {
@@ -15,6 +16,7 @@ public class Context {
 	private DAOPersonnage daoPerso = new DAOPersonnage();
 	private DAOAttaque daoAttaque = new DAOAttaque();
 	private DAOObjet daoObjet = new DAOObjet();
+	private DAOSauvegarde daoSauvegarde = new DAOSauvegarde();
 	
 	private static Context _instance=null; 
 	
@@ -23,7 +25,6 @@ public class Context {
 	
 	public static Context get_instance() {
 		if(_instance==null) {_instance=new Context();}
-//		else System.out.println("old instance");
 		return _instance;
 	}
 	
@@ -72,7 +73,15 @@ public class Context {
 	public void setDaoObjet(DAOObjet daoObjet) {
 		this.daoObjet = daoObjet;
 	}
-	
-	
+
+
+	public DAOSauvegarde getDaoSauvegarde() {
+		return daoSauvegarde;
+	}
+
+
+	public void setDaoSauvegarde(DAOSauvegarde daoSauvegarde) {
+		this.daoSauvegarde = daoSauvegarde;
+	}
 	
 }

@@ -6,7 +6,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @DiscriminatorValue("magicien")
-@PrimaryKeyJoinColumn(name="id_perso",referencedColumnName = "id")
 public class Magicien extends Personnage 
 {
 
@@ -33,13 +32,11 @@ public class Magicien extends Personnage
 
 
     @Override
-    public String toString() {
-        return "Magicien [hP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", pA=" + pA + ", pM="
-                + pM + ", regenPA=" + regenPA + "]";
-    }
-
-
-
+	public String toString() {
+		return "Magicien [id=" + id + ", x=" + x + ", y=" + y + ", hP=" + hP + ", attaque=" + attaque
+				+ ", intelligence=" + intelligence + ", pA=" + pA + ", pM=" + pM + ", regenPA=" + regenPA + ", maxPA="
+				+ maxPA + "]";
+	}
 
 
 }

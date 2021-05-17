@@ -91,7 +91,7 @@ public class Objet {
 
 	@Override
 	public String toString() {
-		return "Objet [nomObjet=" + nomObjet + ", HP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence
-				+ ", points d'attaque=" + pA + "]";
+		return "Objet [id=" + id + ", nomObjet=" + nomObjet + ", hP=" + hP + ", attaque=" + attaque + ", intelligence="
+				+ intelligence + ", pA=" + pA + ", pM=" + pM + "]";
 	}
 }

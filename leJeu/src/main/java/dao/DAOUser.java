@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import metier.User;
@@ -51,14 +52,18 @@ public class DAOUser implements IDAO<User>{
 
 	public User checkConnect(String login, String password) {
 		EntityManager em = Context.get_instance().getEmf().createEntityManager();
-		Query myQuery = em.createQuery("SELECT u from User u WHERE u.login = :login and u.password= :password",User.class);
-//		myQuery.setParameter("login", login);
-//		myQuery.setParameter("password", password);
-//		User user= (User) myQuery.getSingleResult();
-//		em.close();
-//		return user;
-		return null;
+		try {
+			Query myQuery = em.createQuery("SELECT u from User u WHERE u.login = :login and u.password= :password",User.class);
+			myQuery.setParameter("login", login);
+			myQuery.setParameter("password", password);
+			User user= (User) myQuery.getSingleResult();
+			em.close();
+			return user;
+		}
+		catch(NoResultException e)
+		{
+			return null;
+		}
 	}
-
 
 }
