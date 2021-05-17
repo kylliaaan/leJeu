@@ -9,7 +9,7 @@ import java.util.Scanner;
 import menuPrincipal.Accueil;
 import metier.Attaque;
 import metier.Carte;
-import metier.Fantome;
+import metier.Gobelin;
 import metier.Guerrier;
 import metier.Magicien;
 import metier.Objet;
@@ -207,18 +207,18 @@ public class App {
 	}
 
 	private static void combatSolo(int niveau) {
-		Carte carte = cartes.get(niveau);
+		Carte carte = cartes.get(niveau-1);
 		int obstacles[][]=creerObstacle(carte);
-		int maxPm1=joueur1.getpM();
-		int maxPm2=joueur2.getpM();
+		joueur2=new Gobelin();
 		int alt=1;
 		joueur2=new Fantome();
 		//		MapGenerator.GeneratorMap(carte,obstacles);
 		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
 			afficherCarte(carte,obstacles);
+			System.out.println("HP joueur:"+joueur1.gethP()+"|HP ennemi:"+joueur2.gethP());
 			if (alt==1) {
 				System.out.println("Joueur 1 :");
-				joueur1.setpM(maxPm1);
+				joueur1.setpM(joueur1.getMaxPM());
 				joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
 				if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
 				tour(joueur1,obstacles,carte);
@@ -226,17 +226,19 @@ public class App {
 			}
 			else {
 				System.out.println("Tour de l'enemi");
-				joueur2.setpM(maxPm2);
+				joueur2.setpM(joueur2.getMaxPM());
 				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
 				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
-				Fantome.tourFantome(joueur2,joueur1, obstacles,carte);
+				Gobelin.tourGobelin(joueur2,joueur1, obstacles,carte);
 				alt=1;
 			}
 		}
+		if(joueur1.gethP()>0) {System.out.println("Vous avez terminï¿½ le niveau "+niveau+"!");}
+		else {System.out.println("Vous avez perdu!");menuJeu();}
 	}
 
 	public static void jeuOnline() {
-		System.out.println("On a pas de online mdr tu t'es cru sur Fortnite?");
+		System.out.println("On a pas de online tu t'es cru sur Fortnite?");
 		menuJeu();
 	}
 
@@ -305,7 +307,7 @@ public class App {
 		
 
 	private static void deplacer(Personnage j,int obstacles[][],Carte c) {
-//		System.out.println("déplacement");
+//		System.out.println("dï¿½placement");
 		if (j.getpM()<=0) {System.out.println("Pas assez de PM");}
 		while(j.getpM()>0) {
 			System.out.println("PM : "+j.getpM());
@@ -354,7 +356,7 @@ public class App {
 		if(j==joueur1) {cible=joueur2;}
 		else if(j==joueur2) {cible=joueur1;}
 		Attaque.calculDegat(j,cible, attaques.get(choix));
-//		j.setpA(j.getpA()-attaques.get(choix).getpA()); //nouveaux PA déjà calculés dans calculDegats()
+//		j.setpA(j.getpA()-attaques.get(choix).getpA()); //nouveaux PA dï¿½jï¿½ calculï¿½s dans calculDegats()
 		if (nombreJoueur == 2) {
 		System.out.println("HP Joueur 1 : "+joueur1.gethP()+" | HP Joueur 2 : "+joueur2.gethP());}
 		else if (nombreJoueur == 1) {
@@ -390,7 +392,7 @@ public class App {
 
 		public static void afficherCartePlacement(Personnage j,Carte c,int [][] obstacles) {
 			int map[][] = new int[c.getX()][c.getY()];
-			for ( int ln = 0; ln < c.getX(); ln++) //pas d'obstacle sur les 4 positions de départ
+			for ( int ln = 0; ln < c.getX(); ln++) //pas d'obstacle sur les 4 positions de dï¿½part
 			{
 				for ( int col = 0; col < c.getY(); col++) 
 				{
@@ -475,7 +477,7 @@ public class App {
 		}
 
 		public static void main(String[] args) {
-			/* Creation base de données :
+			/* Creation base de donnï¿½es :
 			
 			User Martin= new User("martin","martin");
 			User Kyllian= new User("kyllian","kyllian");
