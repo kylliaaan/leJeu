@@ -23,6 +23,37 @@ public class NewCarte extends Canvas implements Runnable{
 	public boolean running = false;
 	public int tickCount = 0;
 	
+	public static final int mapWIDTH = 20;
+	public static final int mapHEIGTH = 20;
+	static int x = 0;
+	static int y = 0;
+	static int tilesize=32;
+		
+	int[][] map =  {
+			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+			};
+	
+	
+	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGTH, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels =((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
@@ -34,7 +65,7 @@ public class NewCarte extends Canvas implements Runnable{
 	
 		frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(400, 200, 650, 500);
+		frame.setBounds(400, 200, 640, 672);
 		frame.setLayout(new BorderLayout());
 		
 		frame.add(this,BorderLayout.CENTER);
@@ -69,7 +100,7 @@ public class NewCarte extends Canvas implements Runnable{
 		
 		
 
-		while(running) 
+		while(running) // gestion du rafraichissement
 		{
 			long now = System.nanoTime();
 			delta += (now-lastTime)/nsPerTick;
@@ -110,7 +141,8 @@ public class NewCarte extends Canvas implements Runnable{
 		tickCount++;
 		
 		for (int i = 0 ; i<pixels.length; i++) {
-			pixels[i] = i + tickCount;
+			
+			pixels[i] = i;
 		}
 			
 		
@@ -126,9 +158,35 @@ public class NewCarte extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
-		g.setColor(Color.BLACK);
+		/*g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+		*/
+				
+		for ( int ln = 0; ln < mapWIDTH; ln++)
+		{
+
+			for ( int col = 0; col < mapHEIGTH; col++) 
+			{
+				int rc = map[ln][col];
+				
+				switch (rc){
+				case 0:
+					g.setColor(Color.GREEN);break; //Case vide
+				case 1:
+					g.setColor(Color.BLUE);break; //Joueur 1
+				case 2:
+					g.setColor(Color.RED);break; //Joueur 2
+				case 3:
+					g.setColor(Color.BLACK);break; //Obstacle haut
+				case 4:
+					g.setColor(Color.GRAY);break; //Obstacle bas
+				}
+
+				g.fillRect((int) x +col * tilesize - 1, (int) y + ln * tilesize - 1, tilesize,tilesize);
+
+			}
+
+		}
 		g.dispose();
 		bs.show();
 		
