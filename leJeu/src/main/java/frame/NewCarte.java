@@ -10,36 +10,84 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
 public class NewCarte extends Canvas implements Runnable{
 
 	public static final int WIDTH = 160;
 	public static final int HEIGTH = WIDTH/12*9;
 	public static final int scale = 3;
-	public static final String NAME = "Test";
-	
+		
 	private JFrame frame;
+	
 	
 	public boolean running = false;
 	public int tickCount = 0;
+	
+	public static final int mapWIDTH = 20;
+	public static final int mapHEIGTH = 20;
+	static int x = 0;
+	static int y = 0;
+	static int tilesize=32;
+		
+	int[][] map =  {
+			{3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+			};
+	
+	
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGTH, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels =((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
 	
 	public NewCarte() {
-		setMinimumSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
-		setMaximumSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
-		setPreferredSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
-	
-		frame = new JFrame(NAME);
+		
+		Canvas canvas = new Canvas();
+				
+		canvas.setMinimumSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
+		canvas.setMaximumSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
+		canvas.setPreferredSize(new Dimension(WIDTH * scale, HEIGHT * scale ));
+		//canvas.setFocusable(false);
+		
+		frame = new JFrame("A la recherche du Sopra");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(400, 200, 650, 500);
-		frame.setLayout(new BorderLayout());
+		frame.setBounds(400, 200, 652, 672);
+		frame.getContentPane().setLayout(new BorderLayout());
 		
-		frame.add(this,BorderLayout.CENTER);
-		//frame.pack();
+		frame.getContentPane().add(this,BorderLayout.CENTER);
 		
+		/* JPanel jpanel = new JPanel();
+		jpanel.setBounds(400, 200, 740, 672);
+		jpanel.setLayout(null);
+		jpanel.add(canvas,BorderLayout.CENTER);
+		
+		frame.add(jpanel); 
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(287, 567, 89, 23);
+		jpanel.add(btnNewButton); */
+		
+			
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -66,10 +114,8 @@ public class NewCarte extends Canvas implements Runnable{
 		
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
-		
-		
 
-		while(running) 
+		while(running) // gestion du rafraichissement
 		{
 			long now = System.nanoTime();
 			delta += (now-lastTime)/nsPerTick;
@@ -103,16 +149,13 @@ public class NewCarte extends Canvas implements Runnable{
 		
 	}
 
-
-		
-	
 	public void tick() {
 		tickCount++;
 		
-		for (int i = 0 ; i<pixels.length; i++) {
-			pixels[i] = i + tickCount;
-		}
+		 for (int i = 0 ; i<pixels.length; i++) {
 			
+			pixels[i] = i;
+		} 
 		
 	}
 	
@@ -124,11 +167,37 @@ public class NewCarte extends Canvas implements Runnable{
 		}
 		
 		Graphics g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(image, 0, 0, WIDTH, HEIGTH, null);
 
-		g.setColor(Color.BLACK);
+		/*g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+		*/
+				
+		for ( int ln = 0; ln < mapWIDTH; ln++)
+		{
+
+			for ( int col = 0; col < mapHEIGTH; col++) 
+			{
+				int rc = map[ln][col];
+				
+				switch (rc){
+				case 0:
+					g.setColor(Color.GREEN);break; //Case vide
+				case 1:
+					g.setColor(Color.BLUE);break; //Joueur 1
+				case 2:
+					g.setColor(Color.RED);break; //Joueur 2
+				case 3:
+					g.setColor(Color.BLACK);break; //Obstacle haut
+				case 4:
+					g.setColor(Color.GRAY);break; //Obstacle bas
+				}
+
+				g.fillRect((int) x +col * tilesize - 1, (int) y + ln * tilesize - 1, tilesize,tilesize);
+
+			}
+
+		}
 		g.dispose();
 		bs.show();
 		
@@ -138,10 +207,5 @@ public class NewCarte extends Canvas implements Runnable{
 	
 		new NewCarte().start();
 	}
-
-	
-	
-	
-	
 	
 }
