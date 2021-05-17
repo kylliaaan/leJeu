@@ -2,7 +2,6 @@ package metier;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @DiscriminatorValue("guerrier")
@@ -12,8 +11,8 @@ public class Guerrier extends Personnage
 	public Guerrier() {}
 	
 	
-    public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA) {
-        super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA);
+    public Guerrier(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA, int maxPM) {
+        super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA, maxPM);
     }
 
 
