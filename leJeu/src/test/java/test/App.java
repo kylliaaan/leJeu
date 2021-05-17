@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 import metier.Attaque;
 import metier.Carte;
-import metier.Fantome;
+import metier.Gobelin;
 import metier.Guerrier;
 import metier.Magicien;
-import metier.MapGenerator;
+
 import metier.Objet;
 import metier.Personnage;
 import metier.Sauvegarde;
@@ -202,23 +202,26 @@ public class App {
 			System.out.println("Niveau "+niveau);
 			combatSolo(niveau);
 		}
+		System.out.println("Vous avez gagn�!");
 		
 		
 	}
 	
 	private static void combatSolo(int niveau) {
-		Carte carte = cartes.get(niveau);
+		Carte carte = cartes.get(niveau-1);
 		int obstacles[][]=creerObstacle(carte);
-		int maxPm1=joueur1.getpM();
-		int maxPm2=joueur2.getpM();
+		joueur2=new Gobelin();
 		int alt=1;
-		joueur2=new Fantome();
+		joueur2.setX(5);
+		joueur2.setY(8);
+		placer(joueur1, obstacles, carte);
 //		MapGenerator.GeneratorMap(carte,obstacles);
-		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
+		while (joueur1.gethP()>0 && joueur2.gethP()>0) {
 			afficherCarte(carte,obstacles);
+			System.out.println("HP joueur:"+joueur1.gethP()+"|HP ennemi:"+joueur2.gethP());
 			if (alt==1) {
 				System.out.println("Joueur 1 :");
-				joueur1.setpM(maxPm1);
+				joueur1.setpM(joueur1.getMaxPM());
 				joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
 				if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
 				tour(joueur1,obstacles,carte);
@@ -226,17 +229,19 @@ public class App {
 			}
 			else {
 				System.out.println("Tour de l'enemi");
-				joueur2.setpM(maxPm2);
+				joueur2.setpM(joueur2.getMaxPM());
 				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
 				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
-				Fantome.tourFantome(joueur2,joueur1, obstacles,carte);
+				Gobelin.tourGobelin(joueur2,joueur1, obstacles,carte);
 				alt=1;
 			}
 		}
+		if(joueur1.gethP()>0) {System.out.println("Vous avez termin� le niveau "+niveau+"!");}
+		else {System.out.println("Vous avez perdu!");menuJeu();}
 	}
 
 	public static void jeuOnline() {
-		System.out.println("On a pas de online mdr tu t'es cru sur Fortnite?");
+		System.out.println("On a pas de online tu t'es cru sur Fortnite?");
 		menuJeu();
 	}
 	
@@ -282,11 +287,10 @@ public class App {
 	
 	
 	private static void tour(Personnage j,int obstacles[][],Carte c) {
-			System.out.println("tour");
 			if(j.getpA()!=0 && j.getpM()!=0) {
-			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se d�placer (PM = "+j.getpM()+") | 3-Fin du tour");}
+			System.out.println("1-Attaquer (PA = "+j.getpA()+") | 2-Se deplacer (PM = "+j.getpM()+") | 3-Fin du tour");}
 			else if(j.getpA()==0 && j.getpM()!=0) {
-				System.out.println("2-Se d�placer (PM = "+j.getpM()+") | 3-Fin du tour");}
+				System.out.println("2-Se deplacer (PM = "+j.getpM()+") | 3-Fin du tour");}
 			else if(j.getpA()!=0 && j.getpM()==0) {
 				System.out.println("1-Attaquer (PA = "+j.getpA()+") | 3-Fin du tour");}
 			int choix = saisieInt("");
@@ -307,8 +311,7 @@ public class App {
 			System.out.println("PM : "+j.getpM());
 			int map[][] = new int[c.getX()][c.getY()];
 			map[joueur1.getX()][joueur1.getY()]=1;
-			if (nombreJoueur==2) {
-			map[joueur2.getX()][joueur2.getY()]=2;}
+			map[joueur2.getX()][joueur2.getY()]=2;
 			for ( int ln = 0; ln < c.getX(); ln++)
 			{
 				for ( int col = 0; col < c.getY(); col++) 
@@ -383,6 +386,14 @@ public class App {
 	
 	public static void afficherCartePlacement(Personnage j,Carte c,int [][] obstacles) {
 		int map[][] = new int[c.getX()][c.getY()];
+		for ( int ln = 0; ln < c.getX(); ln++)
+		{
+			for ( int col = 0; col < c.getY(); col++) 
+			{
+				if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
+				else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+			}	
+		}
 		if (j==joueur1) {
 			map[Math.round((c.getX()/2)-2)][3]=1;
 			map[Math.round((c.getX()/2)-1)][2]=1;
@@ -459,6 +470,23 @@ public class App {
 		j.setPosition(x, y);
 	}
 	
+	public static void placerEnnemi(Personnage j,int[][] obstacles,Carte c) {
+
+		Random rand= new Random();
+		int x=0;
+		int y=0;
+		int choix = rand.nextInt(3);
+			switch(choix) 
+			{
+			case 0 :x=Math.round((c.getX()/2)-2);y=3;break; 
+			case 1 :x=Math.round((c.getX()/2)-1);y=2 ;break;
+			case 2 :x=Math.round(c.getX()/2);y=2 ;break;
+			case 3 :x=Math.round((c.getX()/2)+1);y=3 ;break;
+			default :placer(j,obstacles,c);break;
+			}
+		j.setPosition(x, y);
+	}
+	
 	public static void main(String[] args) {
 
 		attaque1.add(cDP);
@@ -470,8 +498,9 @@ public class App {
 		attaque1.add(bDF);
 		attaque2.add(bDF);
 		cartes.add(foret);
-		menuPrincipal();
+//		menuPrincipal();
 		
+		menuAventure();
 //		attaque1.add(Context.get_instance().getDaoAttaque().findById(2));
 //		attaque1.add(Context.get_instance().getDaoAttaque().findById(3));
 //		inventaire1.add(Context.get_instance().getDaoObjet().findById(1));
@@ -513,8 +542,8 @@ public class App {
 //		System.out.println(Context.get_instance().getDaoObjet().findAll());
 		
 		
-		menuPrincipal();
-		Context.get_instance().getEmf().close();
+//		menuPrincipal();
+//		Context.get_instance().getEmf().close();
 		
 //		cartes.add(foret);
 //		Accueil ac = new Accueil();
