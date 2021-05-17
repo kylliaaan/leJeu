@@ -139,7 +139,6 @@ public class Gobelin extends Personnage
 			j.setpA(j.getpA()-1);
 			Random rand2 = new Random();
 			int proba = rand2.nextInt(10);
-			System.out.println(proba);
 			if (proba>=1) {
 				System.out.println("-"+j.getAttaque()+"hp");
 				cible.sethP(cible.gethP()-j.getAttaque());
@@ -153,7 +152,6 @@ public class Gobelin extends Personnage
 			j.setpA(j.getpA()-2);
 			Random rand2 = new Random();
 			int proba = rand2.nextInt(10);
-			System.out.println(proba);
 			if (proba>=3) {
 				System.out.println("-"+j.getIntelligence()+"hp");
 				cible.sethP(cible.gethP()-j.getAttaque());

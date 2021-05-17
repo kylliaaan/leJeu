@@ -139,7 +139,7 @@ public class App {
 		switch(choix) 
 		{
 		case 1 : retrouverPartie();jeuSolo();menuJeu();break;
-		case 2 : choixPerso(1);jeuSolo();menuJeu();break;
+		case 2 : jeuSolo();menuJeu();break;
 		case 3 : menuJeu();break;
 		default : menuAventure();break;
 		}
@@ -198,6 +198,7 @@ public class App {
 	}
 
 	public static void jeuSolo() {
+		choixPerso(1);
 		for (int niveau=1;niveau <= cartes.size() ;niveau++) {
 			System.out.println("Niveau "+niveau);
 			combatSolo(niveau);
@@ -209,7 +210,9 @@ public class App {
 	private static void combatSolo(int niveau) {
 		Carte carte = cartes.get(niveau-1);
 		int obstacles[][]=creerObstacle(carte);
+		placer(joueur1, obstacles, carte);
 		joueur2=new Gobelin();
+		placerIa(joueur2,obstacles,carte);
 		int alt=1;
 		//		MapGenerator.GeneratorMap(carte,obstacles);
 		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
@@ -232,7 +235,7 @@ public class App {
 				alt=1;
 			}
 		}
-		if(joueur1.gethP()>0) {System.out.println("Vous avez termin� le niveau "+niveau+"!");}
+		if(joueur1.gethP()>0) {System.out.println("Vous avez terminine le niveau "+niveau+"!");}
 		else {System.out.println("Vous avez perdu!");menuJeu();}
 	}
 
@@ -312,14 +315,13 @@ public class App {
 			System.out.println("PM : "+j.getpM());
 			int map[][] = new int[c.getX()][c.getY()];
 			map[joueur1.getX()][joueur1.getY()]=1;
-			if (nombreJoueur==2) {
-				map[joueur2.getX()][joueur2.getY()]=2;}
+			map[joueur2.getX()][joueur2.getY()]=2;
 			for ( int ln = 0; ln < c.getX(); ln++)
 			{
 				for ( int col = 0; col < c.getY(); col++) 
 				{
-					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
-					else if (obstacles[ln][col]==2) {map[ln][col]=4;}}} //Obstacle bas
+					if (obstacles[ln][col]==1) {map[ln][col]=9;} //Obstacle haut
+					else if (obstacles[ln][col]==2) {map[ln][col]=8;}}} //Obstacle bas
 			String direction = saisieString("Droite D | Gauche Q | Haut Z | Bas S | Retour R");
 			direction.equalsIgnoreCase(direction); //ne fonctionne pas
 			switch(direction) {
@@ -336,8 +338,7 @@ public class App {
 //			default : deplacer(j,obstacles,c);break;
 			default : deplacer(j,obstacles,c);return;}
 			map[joueur1.getX()][joueur1.getY()]=1;
-			if (nombreJoueur==2) {
-				map[joueur2.getX()][joueur2.getY()]=2;}
+			map[joueur2.getX()][joueur2.getY()]=2;
 			for (int[] ligne : map) {
 				System.out.println(Arrays.toString(ligne));
 			}
@@ -378,8 +379,8 @@ public class App {
 			{
 				for ( int col = 0; col < c.getY(); col++) 
 				{
-					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
-					else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+					if (obstacles[ln][col]==1) {map[ln][col]=9;} //Obstacle haut
+					else if (obstacles[ln][col]==2) {map[ln][col]=8;} //Obstacle bas
 				}	
 			}
 			map[joueur1.getX()][joueur1.getY()]=1;
@@ -395,21 +396,21 @@ public class App {
 			{
 				for ( int col = 0; col < c.getY(); col++) 
 				{
-					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
-					else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+					if (obstacles[ln][col]==1) {map[ln][col]=9;} //Obstacle haut
+					else if (obstacles[ln][col]==2) {map[ln][col]=8;} //Obstacle bas
 				}	
 			}
 			if (j==joueur1) {
-				map[Math.round((c.getX()/2)-2)][3]=1;
-				map[Math.round((c.getX()/2)-1)][2]=1;
-				map[Math.round(c.getX()/2)][2]=1;
-				map[Math.round((c.getX()/2)+1)][3]=1;
+				map[Math.round((c.getX()/2))-2][3]=1;
+				map[Math.round((c.getX()/2))-1][2]=2;
+				map[Math.round(c.getX()/2)][2]=3;
+				map[Math.round((c.getX()/2))+1][3]=4;
 			}
 			else if (j==joueur2) {
-				map[Math.round((c.getX()/2)-2)][c.getY()-3]=2;
-				map[Math.round((c.getX()/2)-1)][c.getY()-2]=2;
-				map[Math.round((c.getX()/2))][c.getY()-2]=2;
-				map[Math.round((c.getX()/2)+1)][c.getY()-3]=2;
+				map[Math.round((c.getX()/2))-2][c.getY()-3]=1;
+				map[Math.round((c.getX()/2))-1][c.getY()-2]=2;
+				map[Math.round((c.getX()/2))][c.getY()-2]=3;
+				map[Math.round((c.getX()/2))+1][c.getY()-3]=4;
 			}
 //			for ( int ln = 0; ln < c.getX(); ln++)
 //			{
@@ -439,6 +440,15 @@ public class App {
 				int y = rand.nextInt(c.getY());
 				obstacles[x][y]=2;
 			}
+			obstacles[Math.round((c.getX()/2))-2][3]=0;
+			obstacles[Math.round((c.getX()/2))-1][2]=0;
+			obstacles[Math.round(c.getX()/2)][2]=0;
+			obstacles[Math.round((c.getX()/2))+1][3]=0;
+			obstacles[Math.round((c.getX()/2))-2][c.getY()-3]=0;
+			obstacles[Math.round((c.getX()/2))-1][c.getY()-2]=0;
+			obstacles[Math.round(c.getX()/2)][c.getY()-2]=0;
+			obstacles[Math.round((c.getX()/2))+1][c.getY()-3]=0;
+			
 			return obstacles;
 		}
 
@@ -472,6 +482,23 @@ public class App {
 				default :placer(j,obstacles,c);break;
 				}
 			}
+			j.setPosition(x, y);
+		}
+		
+		public static void placerIa(Personnage j,int[][] obstacles,Carte c) {
+			//		MapGenerator.GeneratorMapPlacement(c,obstacles);
+			int x=0;
+			int y=0;
+			Random rand=new Random();
+			int choix=rand.nextInt(3)+1;
+			switch(choix) 
+				{
+				case 1 :x=Math.round((c.getX()/2)-2);y=c.getY()-3;break;
+				case 2 :x=Math.round((c.getX()/2)-1);y=c.getY()-2 ;break;
+				case 3 :x=Math.round(c.getX()/2);y=c.getY()-2 ;break;
+				case 4 :x=Math.round((c.getX()/2)+1);y=c.getY()-3 ;break;
+				default :placer(j,obstacles,c);break;
+				}
 			j.setPosition(x, y);
 		}
 
@@ -517,22 +544,18 @@ public class App {
 			attaque1.add(bDF);
 			attaque2.add(bDF);
 			cartes.add(foret);
-			attaque1 = Context.get_instance().getDaoAttaque().findAll();
-			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+//			attaque1 = Context.get_instance().getDaoAttaque().findAll();
+//			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+//			jeuSolo();
 			menuPrincipal();
-					
-//			menuPrincipal(); 
-//			int obstacles[][]=creerObstacle(foret);
-
 //			Accueil ac = new Accueil();
 //			ac.setVisible(true);
-			
-//			menuPrincipal();
+
 
 //			cartes.add(foret);
 //			Accueil ac = new Accueil();
 //			ac.setVisible(true);
 
-			Context.get_instance().getEmf().close();
+//			Context.get_instance().getEmf().close();
 		} 
 	}
