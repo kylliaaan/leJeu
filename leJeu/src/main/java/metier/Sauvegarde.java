@@ -37,13 +37,17 @@ public class Sauvegarde {
 	private Personnage perso;
 	
 	@OneToMany
-	@JoinTable(name="sauvegardes_d_attaques",joinColumns = @JoinColumn(name="idSauvegarde"),inverseJoinColumns = @JoinColumn(name="idAttaque"))
+	@JoinTable(name="sauvegardes_d_attaques",
+	joinColumns = @JoinColumn(name="idSauvegarde"),
+	inverseJoinColumns = @JoinColumn(name="idAttaque"))
 	List<Attaque> attaques = new ArrayList();
-	
+
 	@OneToMany
-	@JoinTable(name="sauvegardes_d_objets",joinColumns = @JoinColumn(name="idSauvegarde"),inverseJoinColumns = @JoinColumn(name="idObjet"))
+	@JoinTable(name="sauvegardes_d_objets",
+	joinColumns = @JoinColumn(name="idSauvegarde"),
+	inverseJoinColumns = @JoinColumn(name="idObjet"))
 	List<Objet> objets = new ArrayList();
-	
+
 	public Sauvegarde() {}
 
 	public Sauvegarde(User user, Personnage perso, List<Attaque> attaques, List<Objet> objets) {

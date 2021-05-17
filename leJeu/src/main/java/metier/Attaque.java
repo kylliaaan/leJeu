@@ -24,7 +24,7 @@ public class Attaque
 	static Attaque cDB = new Attaque(1, "coup_de_baton", "physique", 2, 10);
 	static Attaque bM = new Attaque(5, "baguette_magique", "magique",1, 5);
 	static Attaque bDF = new Attaque(8, "boule_de_feu", "magique", 4, 25);
-		
+
 	public Attaque() {}
 
 	public Attaque(int range, String nomAttaque, String type, int pA , int degats)
@@ -37,6 +37,10 @@ public class Attaque
 	}
 
 
+
+	public int getId() {
+		return id;
+	}
 
 	public int getDegats() {
 		return degats;
@@ -98,83 +102,37 @@ public class Attaque
 
 
 
-	public static void calculDegat(Personnage p1, Personnage p2, String nomAttaque)
+	public static void calculDegat(Personnage p1, Personnage p2, Attaque attaque)
 	{
+		int degats=0;
+		
 		int x1 = p1.getX(); // position A => x et y 
 		int y1 = p1.getY();
 
 		int x2 = p2.getX(); // position B => x et y 
 		int y2 = p2.getY();
 
-		int dist = (int) Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)); 
+		double dist = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+		if(dist<2) {dist=1;} //Pour pouvoir attaquer en diagonal avec une portée de 1
 
-		if (nomAttaque.equals("coup de poing")) 			
-		{ 
-			if(p1.getpA()>=cDP.getpA())
-			{
-				p1.setpA(p1.getpA()-cDP.getpA()); //L'attaquant perd ses points d'attaque même si la cible est hors de portée
-
-				if(dist<=cDP.getRange())
-				{
-					int degats = p1.getAttaque() + cDP.getDegats(); //degat = stat 'Attaque' du perso + les 'degats' de l'attaque
-					p2.sethP(p2.gethP()-degats);
-					System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
-				}
-				else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
-			}
-			else {System.out.println("Points d'attaque insuffisants");}
-		}
-
-		else if(nomAttaque.equals("coup de baton"))
-		{
-			if(p1.getpA()>= cDB.getpA())
-			{
-				p1.setpA(p1.getpA()-cDB.getpA());
-
-				if(dist<=cDB.getRange())
-				{
-					int degats = p1.getAttaque() + cDB.getDegats();
-					p2.sethP(p2.gethP()-degats);
-					System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
-				}
-				else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
-			}
-			else {System.out.println("Points d'attaque insuffisants");}
-		}
-
-		else if(nomAttaque.equals("baguette magique"))
-		{
-
-			if(p1.getpA()>= bM.getpA())
-			{
-				p1.setpA(p1.getpA()-bM.getpA());
-
-				if(dist<=bM.getRange())
-				{
-					int degats = p1.getAttaque() + bM.getDegats();
-					p2.sethP(p2.gethP()-degats);
-					System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
-				}
-				else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
-			}
-			else {System.out.println("Points d'attaque insuffisants");}
-		}
-
-		else if (nomAttaque.equals("boule de feu"))
-		{
-			if(p1.getpA()>= bDF.getpA())
-			{
-				p1.setpA(p1.getpA()-bDF.getpA());
+		if(p1.getpA()>=attaque.getpA())
+		{		
+			p1.setpA(p1.getpA()-attaque.getpA()); //L'attaquant perd ses points d'attaque même si la cible est hors de portée
 			
-				if(dist<=bDF.getRange())
-				{
-					int degats = p1.getAttaque() + bDF.getDegats();
-					p2.sethP(p2.gethP()-degats);
-					System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
-				}
-				else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
+			if(dist<=attaque.getRange())
+			{	
+				if(attaque.getType().equals("physique"))
+				{degats = p1.getAttaque() + attaque.getDegats();} //degat = stat 'Attaque' du perso + les 'degats' de l'attaque
+				
+				else if(attaque.getType().equals("magique"))
+				{degats = p1.getIntelligence() + attaque.getDegats();}
+				
+				p2.sethP(p2.gethP()-degats);
+				System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
 			}
-			else {System.out.println("Points d'attaque insuffisants");}
+			else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
+		}
+		else {System.out.println("Points d'attaque insuffisants");
 		}
 	}
 

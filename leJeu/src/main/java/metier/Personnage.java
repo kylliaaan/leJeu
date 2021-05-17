@@ -35,6 +35,7 @@ public class Personnage
 	protected int regenPA;
 	@Column(name="Max_pt_action",nullable=false)
 	protected int maxPA;
+	@Column(name="Max_pt_mouvement",nullable=false)
 	protected int maxPM;
 
 
