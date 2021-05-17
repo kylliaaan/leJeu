@@ -13,12 +13,9 @@ public class Carte {
 	@Enumerated(EnumType.STRING)
 	private Carte_enum ce;
 	
-	public Carte() {
-		super();
-	}
+	public Carte() {}
 
 	public Carte(String img, int x, int y, int haut, int bas) {
-		super();
 		this.img = img;
 		this.x = x;
 		this.y = y;

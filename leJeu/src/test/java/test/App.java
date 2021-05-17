@@ -40,7 +40,7 @@ public class App {
 	static Personnage joueur2 = null;
 	static int nombreJoueur = 1;
 	int perso = 1;
-		
+	
 	public static String saisieString(String msg) 
 	{
 		Scanner sc = new Scanner(System.in);
