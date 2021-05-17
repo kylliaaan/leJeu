@@ -24,9 +24,10 @@ public class Guerrier extends Personnage
         this.attaque = 20;
         this.intelligence = 5;
         this.pA = 8;
-        this.pM = 3;
+        this.pM = 4;
         this.regenPA = 1 ;
         this.maxPA = 10 ;
+        this.maxPM=4;
     }
 
 
