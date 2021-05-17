@@ -1,6 +1,8 @@
+*target/
+*.classpath
+*.project
+*.settings/
+*.metadata
 
-leJeu/target/classes/frame/Aventure$3.class
-
-leJeu/target/classes/metier/Guerrier.class
-
-leJeu/target/classes/metier/Magicien.class
+*.class
+/target/
