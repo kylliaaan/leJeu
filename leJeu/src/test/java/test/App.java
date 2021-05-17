@@ -390,6 +390,14 @@ public class App {
 
 		public static void afficherCartePlacement(Personnage j,Carte c,int [][] obstacles) {
 			int map[][] = new int[c.getX()][c.getY()];
+			for ( int ln = 0; ln < c.getX(); ln++) //pas d'obstacle sur les 4 positions de départ
+			{
+				for ( int col = 0; col < c.getY(); col++) 
+				{
+					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
+					else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+				}	
+			}
 			if (j==joueur1) {
 				map[Math.round((c.getX()/2)-2)][3]=1;
 				map[Math.round((c.getX()/2)-1)][2]=1;
@@ -402,14 +410,14 @@ public class App {
 				map[Math.round((c.getX()/2))][c.getY()-2]=2;
 				map[Math.round((c.getX()/2)+1)][c.getY()-3]=2;
 			}
-			for ( int ln = 0; ln < c.getX(); ln++)
-			{
-				for ( int col = 0; col < c.getY(); col++) 
-				{
-					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
-					else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
-				}	
-			}
+//			for ( int ln = 0; ln < c.getX(); ln++)
+//			{
+//				for ( int col = 0; col < c.getY(); col++) 
+//				{
+//					if (obstacles[ln][col]==1) {map[ln][col]=3;} //Obstacle haut
+//					else if (obstacles[ln][col]==2) {map[ln][col]=4;} //Obstacle bas
+//				}	
+//			}
 			for (int[] ligne : map) {
 				System.out.println(Arrays.toString(ligne));
 			}
@@ -521,8 +529,8 @@ public class App {
 //			menuPrincipal();
 
 //			cartes.add(foret);
-			Accueil ac = new Accueil();
-			ac.setVisible(true);
+//			Accueil ac = new Accueil();
+//			ac.setVisible(true);
 
 			Context.get_instance().getEmf().close();
 		} 
