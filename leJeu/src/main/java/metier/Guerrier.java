@@ -19,12 +19,13 @@ public class Guerrier extends Personnage
 
     public Guerrier(int x, int y){
         super(x, y);
+        this.id =1;
         this.hP = 100;
         this.attaque = 20;
         this.intelligence = 5;
         this.pA = 8;
         this.pM = 4;
-        this.regenPA = 1 ;
+        this.regenPA = 3 ;
         this.maxPA = 10 ;
         this.maxPM=4;
     }

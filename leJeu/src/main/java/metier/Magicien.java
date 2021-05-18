@@ -19,12 +19,13 @@ public class Magicien extends Personnage
 
     public Magicien(int x, int y) 
     {
+    	this.id =2;
         this.hP = 70;
         this.attaque = 12;
         this.intelligence = 15;
         this.pA = 10;
         this.pM = 3;
-        this.regenPA = 2 ;
+        this.regenPA = 4 ;
         this.maxPA = 10 ;
         this.maxPM=3;
     }

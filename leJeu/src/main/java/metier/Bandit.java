@@ -2,39 +2,38 @@ package metier;
 
 import java.util.Random;
 
-public class Gobelin extends Personnage
+public class Bandit extends Personnage
 {
 
 
 
-    public Gobelin(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA, int maxPM) {
+    public Bandit(int id,int x, int y, int hP, int attaque, int intelligence, int pA, int pM, int regenPA, int maxPA, int maxPM) {
         super(id,x, y, hP, attaque, intelligence, pA, pM, regenPA, maxPA, maxPM);
 }
 
-    public Gobelin(){
-    	this.id = 10;
+    public Bandit(){
+    	this.id = 20;
 	    this.hP = 50;
 	    this.attaque = 10;
-	    this.intelligence = 5;
+	    this.intelligence = 10;
 	    this.pA = 3;
 	    this.pM = 3;
 	    this.regenPA = 1 ;
 	    this.maxPA = 3 ;
 	    this.maxPM=3;}
 	    
-    public Gobelin(int x, int y){
-        super(x, y);
-}
-
+    public Bandit(int x, int y){
+        super(x, y);}
     
+
 
     @Override
     public String toString() {
-        return "Gobelin [hP=" + hP + ", pA=" + pA + ", pM=" + pM + "]";
+        return "Bandit [hP=" + hP + ", pA=" + pA + ", pM=" + pM + "]";
     }
     
-    public static void tourGobelin(Personnage j, Personnage cible, int[][] obstacles, Carte carte) {
-		int distanceX = cible.getX()-j.getX();
+    public static void tourBandit(Personnage j, Personnage cible, int[][] obstacles, Carte carte) {
+    	int distanceX = cible.getX()-j.getX();
 		int distanceY = cible.getY()-j.getY();
 		int distance = Math.abs(distanceX)+Math.abs(distanceY);
 		int pos1x = 0 ;
@@ -45,8 +44,8 @@ public class Gobelin extends Personnage
 		int pos3y = 0 ;
 		int pos4x = 0 ;
 		int pos4y = 0 ;
-		if (distance >1) {
-			while (distance >1 && j.getpM()>0) {
+		if (distance > 3) {
+			while (distance >3 && j.getpM()>0) {
 				if (Math.abs(distanceX)>=Math.abs(distanceY)) {
 					if (distanceX>=0) {
 						pos1x=j.getX()+1;
@@ -135,12 +134,13 @@ public class Gobelin extends Personnage
 			}
 		}
 		if (distance==1 && j.getpA()>0) {
-			System.out.println("Coup de poing");
+			System.out.println("Dague empoisonnée");
 			j.setpA(j.getpA()-1);
 			Random rand2 = new Random();
 			int proba = rand2.nextInt(10);
-			if (proba>=1) {
-				System.out.println("-"+j.getAttaque()+"hp");
+			if (proba>=4) {
+				System.out.println("-"+j.getAttaque()+j.getIntelligence()/2+"hp");
+//				System.out.println("Vous êtes empoisonné ("+j.getIntelligence()/2+" dégats par tour");
 				cible.sethP(cible.gethP()-j.getAttaque());
 			}
 			else {
@@ -148,11 +148,11 @@ public class Gobelin extends Personnage
 			}	
 		}
 		else if (distance<=3) {
-			System.out.println("Jet de pierre");
+			System.out.println("Jet de couteau");
 			j.setpA(j.getpA()-2);
 			Random rand2 = new Random();
 			int proba = rand2.nextInt(10);
-			if (proba>=3) {
+			if (proba>=1) {
 				System.out.println("-"+j.getIntelligence()+"hp");
 				cible.sethP(cible.gethP()-j.getAttaque());
 			}
@@ -249,53 +249,3 @@ public class Gobelin extends Personnage
 		}
 	}
 }
-
-//if (Math.abs(distanceX)>Math.abs(distanceY)) {
-//if (distanceX>0) {
-//	if(obstacles[j.getX()+1][j.getY()]==0) {
-//		j.setX(j.getX()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceY>0) {
-//		if(obstacles[j.getX()][j.getY()+1]==0) {
-//		j.setY(j.getY()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceY<=0 && obstacles[j.getX()][j.getY()-1]==0) {
-//		j.setY(j.getY()-1);
-//		j.setpM(j.getpM()-1);}	
-//}
-//else if (distanceX<0){
-//	if(obstacles[j.getX()-1][j.getY()]==0) {
-//		j.setX(j.getX()-1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceY>0 && obstacles[j.getX()][j.getY()+1]==0) {
-//		j.setY(j.getY()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceY<=0 && obstacles[j.getX()][j.getY()-1]==0) {
-//		j.setY(j.getY()-1);
-//		j.setpM(j.getpM()-1);}	
-//}
-//}
-//if (Math.abs(distanceY)>=Math.abs(distanceX)) {
-//if (distanceY>0) {
-//	if(obstacles[j.getX()][j.getY()+1]==0) {
-//		j.setY(j.getY()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceX>0 && obstacles[j.getX()+1][j.getY()]==0) {
-//		j.setX(j.getX()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceX<=0 && obstacles[j.getX()-1][j.getY()]==0) {
-//		j.setX(j.getX()-1);
-//		j.setpM(j.getpM()-1);}	
-//}
-//else if (distanceY<0){
-//	if(obstacles[j.getX()][j.getY()-1]==0) {
-//		j.setY(j.getY()-1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceX>0 && obstacles[j.getX()+1][j.getY()]==0) {
-//		j.setX(j.getX()+1);
-//		j.setpM(j.getpM()-1);}
-//	else if (distanceX<=0 && obstacles[j.getX()-1][j.getY()]==0) {
-//		j.setX(j.getX()-1);
-//		j.setpM(j.getpM()-1);}	
-//}
-//}
