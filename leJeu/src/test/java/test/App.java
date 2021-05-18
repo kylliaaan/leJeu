@@ -17,8 +17,6 @@ import metier.Personnage;
 import metier.User;
 import util.Context;
 
-import java.awt.Color;
-
 public class App {
 
 
@@ -553,8 +551,8 @@ public class App {
 
 
 //			cartes.add(foret);
-//			Accueil ac = new Accueil();
-//			ac.setVisible(true);
+			Accueil ac = new Accueil();
+			Accueil.Accueil().setVisible(true);
 
 //			Context.get_instance().getEmf().close();
 		} 
