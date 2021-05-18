@@ -507,11 +507,12 @@ public class App {
 		}
 
 		public static void main(String[] args) {
-			/* Creation base de donn�es :
+//			Creation base de donn�es :
 			
 			User Martin= new User("martin","martin");
 			User Kyllian= new User("kyllian","kyllian");
 			User Louis= new User("louis","louis");
+			User Admin= new User("admin","admin");
 			Context.get_instance().getDaoUser().save(Martin);
 			Context.get_instance().getDaoUser().save(Kyllian);
 			Context.get_instance().getDaoUser().save(Louis);
@@ -536,20 +537,20 @@ public class App {
 //			Sauvegarde s = new Sauvegarde(u,p,attaque1,inventaire1);
 //			Context.get_instance().getDaoSauvegarde().save(s);
 			
-			 */
+			 
 			
 			
-			attaque1.add(cDP);
-			attaque2.add(cDP);
-			attaque1.add(cDB);
-			attaque2.add(cDB);
-			attaque1.add(bM);
-			attaque2.add(bM);
-			attaque1.add(bDF);
-			attaque2.add(bDF);
-			cartes.add(foret);
-//			attaque1 = Context.get_instance().getDaoAttaque().findAll();
-//			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+//			attaque1.add(cDP);
+//			attaque2.add(cDP);
+//			attaque1.add(cDB);
+//			attaque2.add(cDB);
+//			attaque1.add(bM);
+//			attaque2.add(bM);
+//			attaque1.add(bDF);
+//			attaque2.add(bDF);
+//			cartes.add(foret);
+			attaque1 = Context.get_instance().getDaoAttaque().findAll();
+			attaque2 = Context.get_instance().getDaoAttaque().findAll();
 //			jeuSolo();
 			menuPrincipal();
 //			Accueil ac = new Accueil();
