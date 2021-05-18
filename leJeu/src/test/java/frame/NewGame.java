@@ -49,7 +49,7 @@ public class NewGame{
 		jf.getContentPane().add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Magicien");
-		rdbtnNewRadioButton_1.setBounds(132, 202, 111, 23);
+		rdbtnNewRadioButton_1.setBounds(132, 198, 111, 23);
 		jf.getContentPane().add(rdbtnNewRadioButton_1);
 		
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Assassin");
@@ -61,22 +61,22 @@ public class NewGame{
 		lblNewLabel.setBounds(108, 24, 217, 14);
 		jf.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("HP XXX | ATQ XX | PA XX | PM XX ");
+		JLabel lblNewLabel_1 = new JLabel("HP 100 | ATQ 20 | PA 8 | PM 4 ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(299, 172, 228, 14);
+		lblNewLabel_1.setBounds(263, 171, 228, 14);
 		jf.getContentPane().add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("HP XXX | ATQ XX | PA XX | PM XX ");
+		JLabel lblNewLabel_1_1 = new JLabel("HP 70 | ATQ 12 | PA 10 | PM 3 ");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblNewLabel_1_1.setBounds(299, 206, 228, 14);
+		lblNewLabel_1_1.setBounds(263, 202, 228, 14);
 		jf.getContentPane().add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("HP XXX | ATQ XX | PA XX | PM XX ");
+		JLabel lblNewLabel_1_2 = new JLabel("HP 85 | ATQ 30 | PA 6 | PM 5 ");
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblNewLabel_1_2.setBounds(299, 232, 228, 14);
+		lblNewLabel_1_2.setBounds(263, 232, 228, 14);
 		jf.getContentPane().add(lblNewLabel_1_2);
 		return jf;
 	}
