@@ -12,7 +12,7 @@ import util.Context;
 public class DAOAttaque implements IDAO<Attaque>{
 
 	@Override
-	public List<Attaque> findById(int id) {
+	public Attaque findById(int id) {
 		EntityManager em = Context.get_instance().getEmf().createEntityManager();
 
 		Attaque u=em.find(Attaque.class, id);
