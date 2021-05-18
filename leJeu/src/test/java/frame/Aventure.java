@@ -28,16 +28,16 @@ public class Aventure{
 		
 		JLabel lblNewLabel = new JLabel("AVENTURE : ");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(174, 23, 98, 29);
-		jf.add(lblNewLabel);
+		lblNewLabel.setBounds(231, 71, 98, 29);
+		jf.getContentPane().add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Continuer");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(70, 106, 98, 23);
-		jf.add(btnNewButton);
+		btnNewButton.setBounds(95, 205, 98, 23);
+		jf.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("Nouvelle Partie");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -46,8 +46,8 @@ public class Aventure{
 				jf.dispose();
 			}
 		});
-		btnNewButton_2.setBounds(244, 106, 128, 23);
-		jf.add(btnNewButton_2);
+		btnNewButton_2.setBounds(351, 205, 128, 23);
+		jf.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Retour");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -56,8 +56,8 @@ public class Aventure{
 				jf.dispose();
 			}
 		});
-		btnNewButton_3.setBounds(337, 229, 89, 23);
-		jf.add(btnNewButton_3);
+		btnNewButton_3.setBounds(503, 408, 89, 23);
+		jf.getContentPane().add(btnNewButton_3);
 	return jf;
 	}
 

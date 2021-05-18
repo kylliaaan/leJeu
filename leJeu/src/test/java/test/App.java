@@ -34,8 +34,8 @@ public class App {
 	static Attaque bDF = new Attaque(8, "boule de feu", "magique", 4, 25);
 	static Objet baton = new Objet("baton",0,10,0,1,0);
 	static Objet baguetteMagique = new Objet("baguette magique",0,0,10,2,0);
-	static Personnage joueur1 = null;
-	static Personnage joueur2 = null;
+	public static Personnage joueur1 = null;
+	public static Personnage joueur2 = null;
 	static int nombreJoueur = 1;
 	int perso = 1;
 
