@@ -17,6 +17,7 @@ import metier.Guerrier;
 import metier.Magicien;
 import metier.Objet;
 import metier.Personnage;
+import metier.Sauvegarde;
 import metier.User;
 import util.Context;
 
@@ -572,7 +573,7 @@ public class App {
 //			User Martin= new User("martin","martin");
 //			User Kyllian= new User("kyllian","kyllian");
 //			User Louis= new User("louis","louis");
-//			User Admin= new User("admin","admin");
+////			User Admin= new User("admin","admin");
 //			Context.get_instance().getDaoUser().save(Martin);
 //			Context.get_instance().getDaoUser().save(Kyllian);
 //			Context.get_instance().getDaoUser().save(Louis);
@@ -592,7 +593,7 @@ public class App {
 //			attaque1.add(Context.get_instance().getDaoAttaque().findById(2));
 //			attaque1.add(Context.get_instance().getDaoAttaque().findById(3));
 //			inventaire1.add(Context.get_instance().getDaoObjet().findById(1));
-//			User u= Context.get_instance().getDaoUser().findById(6);
+//			User u= Context.get_instance().getDaoUser().findById(1);
 //			Personnage p = Context.get_instance().getDaoPerso().findById(2);
 //			Sauvegarde s = new Sauvegarde(u,p,attaque1,inventaire1);
 //			Context.get_instance().getDaoSauvegarde().save(s);
