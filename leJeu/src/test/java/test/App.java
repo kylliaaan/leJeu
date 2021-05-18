@@ -22,8 +22,11 @@ public class App {
 
 
 	static User user = null;
-	static List<Attaque> attaque1 = new ArrayList();
-	static List<Attaque> attaque2 = new ArrayList();
+	public static List<Attaque> attaque1 = new ArrayList();
+	public static List<Attaque> attaque2 = new ArrayList();
+	public static List<Attaque> attaque3 = new ArrayList();
+	public static List<Attaque> attaque4 = new ArrayList();
+	
 	static List<Objet> inventaire1 = new ArrayList();
 	static List<Objet> inventaire2 = new ArrayList();
 	static List<Carte> cartes = new ArrayList();
@@ -36,8 +39,11 @@ public class App {
 	static Objet baguetteMagique = new Objet("baguette magique",0,0,10,2,0);
 	public static Personnage joueur1 = null;
 	public static Personnage joueur2 = null;
+	public static Personnage joueur3 = null;
+	public static Personnage joueur4 = null;
 	static int nombreJoueur = 1;
 	int perso = 1;
+	public static int alt = 1;
 
 	public static String saisieString(String msg) 
 	{
@@ -211,7 +217,7 @@ public class App {
 		placer(joueur1, obstacles, carte);
 		joueur2=new Gobelin();
 		placerIa(joueur2,obstacles,carte);
-		int alt=1;
+		alt=1;
 		//		MapGenerator.GeneratorMap(carte,obstacles);
 		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
 			afficherCarte(carte,obstacles);
