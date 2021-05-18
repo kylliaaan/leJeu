@@ -65,7 +65,9 @@ public class Personnage
 		// TODO Auto-generated constructor stub
 	}
 
-
+	public Personnage(int hP) {
+		this.hP = 0;
+	}
 
 	public int getX() {
 		return x;

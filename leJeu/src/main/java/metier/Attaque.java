@@ -21,9 +21,9 @@ public class Attaque
 	protected int degats;
 
 	static Attaque cDP = new Attaque(1, "coup_de_poing", "physique", 1, 5);
-	static Attaque cDB = new Attaque(1, "coup_de_baton", "physique", 2, 10);
-	static Attaque bM = new Attaque(5, "baguette_magique", "magique",1, 5);
-	static Attaque bDF = new Attaque(8, "boule_de_feu", "magique", 4, 25);
+	static Attaque cDB = new Attaque(2, "coup_de_baton", "physique", 2, 10);
+	static Attaque bM = new Attaque(5, "baguette_magique", "magique",2, 10);
+	static Attaque bDF = new Attaque(8, "boule_de_feu", "magique", 6, 25);
 
 	public Attaque() {}
 
@@ -105,7 +105,15 @@ public class Attaque
 	public static void calculDegat(Personnage p1, Personnage p2, Attaque attaque)
 	{
 		int degats=0;
-		
+		String nom="nom";
+		switch (p2.getId()) {
+			case 1: nom="Guerrier";break;
+			case 2: nom="Magicien";break;
+			case 3: nom="Assassin";break;
+			case 10: nom="Gobelin";break;
+			case 20: nom="Bandit" ;break;
+			default: nom="Bandit" ;break;
+		}
 		int x1 = p1.getX(); // position A => x et y 
 		int y1 = p1.getY();
 
@@ -128,7 +136,7 @@ public class Attaque
 				{degats = p1.getIntelligence() + attaque.getDegats();}
 				
 				p2.sethP(p2.gethP()-degats);
-				System.out.println("La victime a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
+				System.out.println(nom+" a reçu "+degats+" dégats. Il lui reste "+p2.gethP()+" HP.");
 			}
 			else{System.out.println("Vous êtes hors de portée ! Ce n'est pas très efficace...");}
 		}

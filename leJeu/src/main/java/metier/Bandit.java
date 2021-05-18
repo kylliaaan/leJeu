@@ -12,25 +12,24 @@ public class Bandit extends Personnage
 }
 
     public Bandit(){
-	    this.hP = 50;
+    	this.id = 20;
+	    this.hP = 80;
 	    this.attaque = 10;
 	    this.intelligence = 10;
 	    this.pA = 3;
-	    this.pM = 3;
+	    this.pM = 4;
 	    this.regenPA = 1 ;
 	    this.maxPA = 3 ;
-	    this.maxPM=3;}
+	    this.maxPM=4;}
 	    
     public Bandit(int x, int y){
-        super(x, y);
-}
-
+        super(x, y);}
+    
 
 
     @Override
     public String toString() {
-        return "Gobelin [hP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", pA=" + pA + ", pM="
-                + pM + ", regenPA=" + regenPA + "]";
+        return "Bandit [hP=" + hP + ", pA=" + pA + ", pM=" + pM + "]";
     }
     
     public static void tourBandit(Personnage j, Personnage cible, int[][] obstacles, Carte carte) {

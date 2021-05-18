@@ -8,7 +8,9 @@ import java.util.Scanner;
 
 import frame.ChoixModes;
 import menuPrincipal.Accueil;
+import metier.Assassin;
 import metier.Attaque;
+import metier.Bandit;
 import metier.Carte;
 import metier.Gobelin;
 import metier.Guerrier;
@@ -31,17 +33,20 @@ public class App {
 	static List<Objet> inventaire1 = new ArrayList();
 	static List<Objet> inventaire2 = new ArrayList();
 	static List<Carte> cartes = new ArrayList();
-	static Carte foret= new Carte("foret",20,20,10,10);
+	static Carte foret= new Carte("foret",10,10,7,7);
+	static Carte grotte= new Carte("grotte",13,13,10,10);
 	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
-	static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
-	static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
+	static Attaque cDB = new Attaque(2, "coup de baton", "physique", 2, 10);
+	static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 10);
 	static Attaque bDF = new Attaque(8, "boule de feu", "magique", 4, 25);
 	static Objet baton = new Objet("baton",0,10,0,1,0);
 	static Objet baguetteMagique = new Objet("baguette magique",0,0,10,2,0);
 	public static Personnage joueur1 = null;
 	public static Personnage joueur2 = null;
-	public static Personnage joueur3 = null;
-	public static Personnage joueur4 = null;
+	public static Personnage joueur3 = new Personnage(0);
+	public static Personnage joueur4 = new Personnage(0);
+	public static Personnage joueur5 = new Personnage(0);
+	public static Personnage j = null;
 	static int nombreJoueur = 1;
 	int perso = 1;
 	public static int alt = 1;
@@ -170,35 +175,34 @@ public class App {
 	}
 
 
-	public static void choixPerso(int perso) {	
-		System.out.println("");
-		System.out.println("Choix du personnage ");
-		System.out.println("Pour le joueur "+perso+":");	
-		System.out.println("1 - Guerrier");
-		System.out.println("2 - Mage");
-		System.out.println("3 - Assassin");
-		int choix =saisieInt("Choix:");
-		Personnage tampon=null;
-		if (choix==1) {
-			tampon = new Guerrier(0,0);
-		}
-		else if (choix==2) {
-			tampon = new Magicien(0,0);
-		}
-		else if (choix==3) {
-			System.out.println("Non");
-			choixPerso(perso);
-		}
-		else {
-			choixPerso(perso);
-		}	
+	public static void choixPerso(int perso) {
+        System.out.println("");
+        System.out.println("Choix du personnage ");
+        System.out.println("Pour le joueur "+perso+":");
+        System.out.println("1 - Guerrier");
+        System.out.println("2 - Magicien");
+        System.out.println("3 - Assassin");
+        int choix =saisieInt("Choix:");
+        Personnage tampon=null;
+        if (choix==1) {
+            tampon = new Guerrier(0,0);
+        }
+        else if (choix==2) {
+            tampon = new Magicien(0,0);
+        }
+        else if (choix==3) {
+        	tampon = new Assassin(0,0);
+        }
+        else {
+            choixPerso(perso);
+        }
 
-		if (perso==1) {joueur1=tampon;} 
-		else if (perso==2) {joueur2=tampon;}
-
+        if (perso==1) {joueur1=tampon;} 
+        else if (perso==2) {joueur2=tampon;}
 
 
-	}
+
+    }
 
 	public static void retrouverPartie() {
 
@@ -207,43 +211,64 @@ public class App {
 
 	public static void jeuSolo() {
 		choixPerso(1);
-		for (int niveau=1;niveau <= cartes.size() ;niveau++) {
+		int niveau=1;
+		for (niveau=1;niveau <= cartes.size() ;niveau++) {
 			System.out.println("Niveau "+niveau);
 			combatSolo(niveau);
 		}
-
-
+		System.out.println("Vous avez termine le mode solo apres "+niveau+" niveaux!");
 	}
 
 	private static void combatSolo(int niveau) {
+		System.out.println("Combat Solo");
 		Carte carte = cartes.get(niveau-1);
 		int obstacles[][]=creerObstacle(carte);
 		placer(joueur1, obstacles, carte);
-		joueur2=new Gobelin();
-		placerIa(joueur2,obstacles,carte);
-		alt=1;
-		//		MapGenerator.GeneratorMap(carte,obstacles);
-		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
-			afficherCarte(carte,obstacles);
-			System.out.println("HP joueur:"+joueur1.gethP()+"|HP ennemi:"+joueur2.gethP());
-			if (alt==1) {
-				System.out.println("Joueur 1 :");
-				joueur1.setpM(joueur1.getMaxPM());
-				joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
-				if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
-				tour(joueur1,obstacles,carte);
-				alt=2;
-			}
-			else {
-				System.out.println("Tour de l'enemi");
-				joueur2.setpM(joueur2.getMaxPM());
-				joueur2.setpA(joueur2.getpA()+joueur2.getRegenPA());
-				if (joueur2.getpA()>joueur2.getMaxPA()) {joueur2.setpA(joueur2.getMaxPA());}
-				Gobelin.tourGobelin(joueur2,joueur1, obstacles,carte);
-				alt=1;
+		joueur1.setpA(joueur1.getMaxPA());
+		int ennemis = 0;
+		switch (niveau) {
+		case 1 :
+			ennemis = 1;
+			joueur2=new Gobelin();
+			placerIa(joueur2,obstacles,carte,2);break;
+		case 2 :
+			ennemis = 2;
+			joueur2=new Gobelin();
+			joueur3=new Bandit();
+			placerIa(joueur2,obstacles,carte,1);
+			placerIa(joueur3,obstacles,carte,3);break;
+		}
+		while (joueur1.gethP()>0 && (joueur2.gethP()+joueur3.gethP()+joueur4.gethP()+joueur5.gethP())>0) {
+			for (alt=1;alt<=ennemis+1;alt++) {
+				switch (alt) {
+				case 1 : j=joueur1;break;
+				case 2 : j=joueur2;break;
+				case 3 : j=joueur3;break;
+				case 4 : j=joueur4;break;
+				case 5 : j=joueur5;break;
+				}
+				
+				if (j.gethP()>0 && joueur1.gethP()>0){
+					afficherCarte(carte,obstacles);	
+					if (alt==1) {
+						System.out.println("Joueur  :");
+						joueur1.setpM(joueur1.getMaxPM());
+						joueur1.setpA(joueur1.getpA()+joueur1.getRegenPA());
+						if (joueur1.getpA()>joueur1.getMaxPA()) {joueur1.setpA(joueur1.getMaxPA());}
+						tour(joueur1,obstacles,carte);
+					}
+					else  {
+						System.out.println("Tour de "+j);
+						j.setpM(j.getMaxPM());
+						j.setpA(j.getpA()+j.getRegenPA());
+						if (j.getpA()>j.getMaxPA()) {j.setpA(j.getMaxPA());}
+						if (j.getId()==10) {Gobelin.tourGobelin(j,joueur1, obstacles,carte);}
+						if (j.getId()==20) {Bandit.tourBandit(j,joueur1, obstacles,carte);}
+					}
+				}
 			}
 		}
-		if(joueur1.gethP()>0) {System.out.println("Vous avez terminine le niveau "+niveau+"!");}
+		if(joueur1.gethP()>0) {System.out.println("Vous avez termine le niveau "+niveau+"!");}
 		else {System.out.println("Vous avez perdu!");menuJeu();}
 	}
 
@@ -254,8 +279,12 @@ public class App {
 
 	public static void jeuMulti(Carte carte) {
 		int obstacles[][]=creerObstacle(carte);
+		String nom1=saisieString("Nom du joueur 1:");
 		placer(joueur1,obstacles,carte);
+		String nom2=saisieString("Nom du joueur 2:");
 		placer(joueur2,obstacles,carte);
+		if (nom1=="Frederic" || nom1=="Frederic") {joueur1.setAttaque(1);joueur1.setIntelligence(1);}
+		else if (nom2=="Frederic" || nom2=="Frederic") {joueur2.setAttaque(1);joueur2.setIntelligence(1);}
 		//		MapGenerator.GeneratorMap(carte,obstacles);
 		int alt=1;
 		while (joueur1.gethP()>0&&joueur2.gethP()>0) {
@@ -282,10 +311,10 @@ public class App {
 		}
 		else {
 			if(joueur1.gethP()<=0&&joueur2.gethP()>0) {
-				vainqueur=1;
+				vainqueur=2;
 			}
 			else if(joueur2.gethP()<=0&&joueur1.gethP()>0) {
-				vainqueur=2;
+				vainqueur=1;
 			}
 			System.out.println("Joueur "+vainqueur+" a gagne!");
 		}
@@ -323,7 +352,11 @@ public class App {
 			System.out.println("PM : "+j.getpM());
 			int map[][] = new int[c.getX()][c.getY()];
 			map[joueur1.getX()][joueur1.getY()]=1;
-			map[joueur2.getX()][joueur2.getY()]=2;
+			if(joueur2.gethP()>0) {map[joueur2.getX()][joueur2.getY()]=2;}
+			if(joueur3.gethP()>0) {map[joueur3.getX()][joueur3.getY()]=3;}
+			if(joueur4.gethP()>0) {map[joueur4.getX()][joueur4.getY()]=4;}
+			if(joueur5.gethP()>0) {map[joueur5.getX()][joueur5.getY()]=5;}
+			map[0][0]=0;
 			for ( int ln = 0; ln < c.getX(); ln++)
 			{
 				for ( int col = 0; col < c.getY(); col++) 
@@ -360,8 +393,22 @@ public class App {
 		if (j==joueur1) {attaques=attaque1;}
 		else if  (j==joueur2) {attaques=attaque2;}
 		afficherAttaques(j);
+		int ciblenum=0;
 		int choix=saisieInt("")-1;
-		if(j==joueur1) {cible=joueur2;}
+		if (choix>attaques.size()) {attaquer(j);}
+		if(j==joueur1) {
+			if (joueur3.gethP()==0) {cible=joueur2;}
+			else {  if(joueur4.gethP()==0) {System.out.println(joueur2);System.out.println(joueur3);ciblenum=saisieInt("Cible? (2/3)");}
+					else if (joueur5.gethP()==0) {System.out.println(joueur2);System.out.println(joueur3);System.out.println(joueur4);ciblenum=saisieInt("Cible? (2/3/4)");}
+					else {System.out.println(joueur2);System.out.println(joueur3);System.out.println(joueur4);System.out.println(joueur5);ciblenum=saisieInt("Cible? (2/3/4/5)");}
+				switch (ciblenum) {
+					case 2: cible= joueur2;break;
+					case 3: cible= joueur3;break;
+					case 4: cible= joueur4;break;
+					default: attaquer(j);break;
+				}
+			}
+		}
 		else if(j==joueur2) {cible=joueur1;}
 		Attaque.calculDegat(j,cible, attaques.get(choix));
 //		j.setpA(j.getpA()-attaques.get(choix).getpA()); //nouveaux PA deja calcules dans calculDegats()
@@ -392,9 +439,17 @@ public class App {
 				}	
 			}
 			map[joueur1.getX()][joueur1.getY()]=1;
-			map[joueur2.getX()][joueur2.getY()]=2;
+			if(joueur2.gethP()>0) {map[joueur2.getX()][joueur2.getY()]=2;}
+			if(joueur3.gethP()>0) {map[joueur3.getX()][joueur3.getY()]=3;}
+			if(joueur4.gethP()>0) {map[joueur4.getX()][joueur4.getY()]=4;}
+			if(joueur5.gethP()>0) {map[joueur5.getX()][joueur5.getY()]=5;}
 			for (int[] ligne : map) {
 				System.out.println(Arrays.toString(ligne));
+			}
+			if (joueur3.gethP()==0) {System.out.println(joueur2);}
+			else {  if(joueur4.gethP()==0) {System.out.println(joueur2);System.out.println(joueur3);}
+				else if (joueur5.gethP()==0) {System.out.println(joueur2);System.out.println(joueur3);System.out.println(joueur4);}
+				else {System.out.println(joueur2);System.out.println(joueur3);System.out.println(joueur4);System.out.println(joueur5);}
 			}
 		}
 
@@ -479,6 +534,7 @@ public class App {
 				case 4 :x=Math.round((c.getX()/2)+1);y=3 ;break;
 				default :placer(j,obstacles,c);break;
 				}
+				joueur1.setPosition(x, y);
 			}
 			if (j==joueur2) {
 				switch(choix) 
@@ -489,17 +545,17 @@ public class App {
 				case 4 :x=Math.round((c.getX()/2)+1);y=c.getY()-3 ;break;
 				default :placer(j,obstacles,c);break;
 				}
+				joueur2.setPosition(x, y);
 			}
-			j.setPosition(x, y);
 		}
 		
-		public static void placerIa(Personnage j,int[][] obstacles,Carte c) {
+		public static void placerIa(Personnage j,int[][] obstacles,Carte c,int position) {
 			//		MapGenerator.GeneratorMapPlacement(c,obstacles);
 			int x=0;
 			int y=0;
-			Random rand=new Random();
-			int choix=rand.nextInt(3)+1;
-			switch(choix) 
+//			Random rand=new Random();
+//			int position=rand.nextInt(3)+1;
+			switch(position) 
 				{
 				case 1 :x=Math.round((c.getX()/2)-2);y=c.getY()-3;break;
 				case 2 :x=Math.round((c.getX()/2)-1);y=c.getY()-2 ;break;
@@ -552,18 +608,19 @@ public class App {
 //			attaque2.add(bM);
 //			attaque1.add(bDF);
 //			attaque2.add(bDF);
-//			cartes.add(foret);
-//			attaque1 = Context.get_instance().getDaoAttaque().findAll();
-//			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+			cartes.add(foret);
+			cartes.add(grotte);
+			attaque1 = Context.get_instance().getDaoAttaque().findAll();
+			attaque2 = Context.get_instance().getDaoAttaque().findAll();
 //			jeuSolo();
-//			menuPrincipal();
+			menuJeu();
 //			Accueil ac = new Accueil();
 ////			ac.setVisible(true);
 
 
 //			cartes.add(foret);
 			//Accueil ac = new Accueil();
-			Accueil.Accueil().setVisible(true);
+//			Accueil.Accueil().setVisible(true);
 			
 //			Context.get_instance().getEmf().close();
 		} 

@@ -19,23 +19,22 @@ public class Guerrier extends Personnage
 
     public Guerrier(int x, int y){
         super(x, y);
-        this.hP = 100;
+        this.id =1;
+        this.hP = 120;
         this.attaque = 20;
         this.intelligence = 5;
         this.pA = 8;
-        this.pM = 4;
-        this.regenPA = 1 ;
-        this.maxPA = 10 ;
-        this.maxPM=4;
+        this.pM = 3;
+        this.regenPA = 3 ;
+        this.maxPA = 8 ;
+        this.maxPM=3;
     }
 
 
 
     @Override
 	public String toString() {
-		return "Guerrier [id=" + id + ", x=" + x + ", y=" + y + ", hP=" + hP + ", attaque=" + attaque
-				+ ", intelligence=" + intelligence + ", pA=" + pA + ", pM=" + pM + ", regenPA=" + regenPA + ", maxPA="
-				+ maxPA + "]";
+		return "Guerrier [HP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", PA=" + pA + ", PM=" + pM + ", regeneration PA=" + regenPA + "]";
 	}
 
 

@@ -19,23 +19,22 @@ public class Assassin extends Personnage
 
     public Assassin(int x, int y){
         super(x, y);
-        this.hP = 85;
+        this.id = 3;
+        this.hP = 80;
         this.attaque = 30;
         this.intelligence = 5;
-        this.pA = 6;
+        this.pA = 7;
         this.pM = 5;
-        this.regenPA = 1 ;
-        this.maxPA = 10 ;
-        this.maxPM=7;
+        this.regenPA = 3 ;
+        this.maxPA = 7 ;
+        this.maxPM=5;
     }
 
 
 
     @Override
 	public String toString() {
-		return "Guerrier [id=" + id + ", x=" + x + ", y=" + y + ", hP=" + hP + ", attaque=" + attaque
-				+ ", intelligence=" + intelligence + ", pA=" + pA + ", pM=" + pM + ", regenPA=" + regenPA + ", maxPA="
-				+ maxPA + "]";
+		return "Assassin [HP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", PA=" + pA + ", PM=" + pM + ", regeneration PA=" + regenPA + "]";
 	}
 
 

@@ -12,6 +12,7 @@ public class Gobelin extends Personnage
 }
 
     public Gobelin(){
+    	this.id = 10;
 	    this.hP = 50;
 	    this.attaque = 10;
 	    this.intelligence = 5;
@@ -25,12 +26,11 @@ public class Gobelin extends Personnage
         super(x, y);
 }
 
-
+    
 
     @Override
     public String toString() {
-        return "Gobelin [hP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", pA=" + pA + ", pM="
-                + pM + ", regenPA=" + regenPA + "]";
+        return "Gobelin [hP=" + hP + ", pA=" + pA + ", pM=" + pM + "]";
     }
     
     public static void tourGobelin(Personnage j, Personnage cible, int[][] obstacles, Carte carte) {

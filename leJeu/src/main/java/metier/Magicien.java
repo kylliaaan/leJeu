@@ -19,22 +19,21 @@ public class Magicien extends Personnage
 
     public Magicien(int x, int y) 
     {
-        this.hP = 70;
+    	this.id =2;
+        this.hP = 80;
         this.attaque = 12;
         this.intelligence = 15;
-        this.pA = 10;
+        this.pA = 9;
         this.pM = 3;
-        this.regenPA = 2 ;
-        this.maxPA = 10 ;
+        this.regenPA = 4 ;
+        this.maxPA = 9 ;
         this.maxPM=3;
     }
 
 
     @Override
 	public String toString() {
-		return "Magicien [id=" + id + ", x=" + x + ", y=" + y + ", hP=" + hP + ", attaque=" + attaque
-				+ ", intelligence=" + intelligence + ", pA=" + pA + ", pM=" + pM + ", regenPA=" + regenPA + ", maxPA="
-				+ maxPA + "]";
+		return "Magicien [HP=" + hP + ", attaque=" + attaque + ", intelligence=" + intelligence + ", PA=" + pA + ", PM=" + pM + ", regeneration PA=" + regenPA + "]";
 	}
 
 
