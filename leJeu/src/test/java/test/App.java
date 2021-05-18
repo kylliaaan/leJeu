@@ -30,7 +30,7 @@ public class App {
 	static List<Objet> inventaire1 = new ArrayList();
 	static List<Objet> inventaire2 = new ArrayList();
 	static List<Carte> cartes = new ArrayList();
-	static Carte foret= new Carte("foret",10,10,10,10);
+	static Carte foret= new Carte("foret",20,20,10,10);
 	static Attaque cDP = new Attaque(1, "coup de poing", "physique", 1, 5);
 	static Attaque cDB = new Attaque(1, "coup de baton", "physique", 2, 10);
 	static Attaque bM = new Attaque(5, "baguette magique", "magique",1, 5);
@@ -509,25 +509,25 @@ public class App {
 		public static void main(String[] args) {
 //			Creation base de donn�es :
 			
-			User Martin= new User("martin","martin");
-			User Kyllian= new User("kyllian","kyllian");
-			User Louis= new User("louis","louis");
-			User Admin= new User("admin","admin");
-			Context.get_instance().getDaoUser().save(Martin);
-			Context.get_instance().getDaoUser().save(Kyllian);
-			Context.get_instance().getDaoUser().save(Louis);
-			
-			Context.get_instance().getDaoPerso().save(new Guerrier(0,0));
-			Context.get_instance().getDaoPerso().save(new Magicien(0,0));
-			
-			Context.get_instance().getDaoAttaque().save(cDP);
-			Context.get_instance().getDaoAttaque().save(cDB);
-			Context.get_instance().getDaoAttaque().save(bM);
-			Context.get_instance().getDaoAttaque().save(bDF);
-			
-			Context.get_instance().getDaoObjet().save(baton);
-			Context.get_instance().getDaoObjet().save(baguetteMagique);	
-			
+//			User Martin= new User("martin","martin");
+//			User Kyllian= new User("kyllian","kyllian");
+//			User Louis= new User("louis","louis");
+//			User Admin= new User("admin","admin");
+//			Context.get_instance().getDaoUser().save(Martin);
+//			Context.get_instance().getDaoUser().save(Kyllian);
+//			Context.get_instance().getDaoUser().save(Louis);
+//			
+//			Context.get_instance().getDaoPerso().save(new Guerrier(0,0));
+//			Context.get_instance().getDaoPerso().save(new Magicien(0,0));
+//			
+//			Context.get_instance().getDaoAttaque().save(cDP);
+//			Context.get_instance().getDaoAttaque().save(cDB);
+//			Context.get_instance().getDaoAttaque().save(bM);
+//			Context.get_instance().getDaoAttaque().save(bDF);
+//			
+//			Context.get_instance().getDaoObjet().save(baton);
+//			Context.get_instance().getDaoObjet().save(baguetteMagique);	
+//			
 //			Exemple de sauvegarde :
 //			attaque1.add(Context.get_instance().getDaoAttaque().findById(2));
 //			attaque1.add(Context.get_instance().getDaoAttaque().findById(3));
@@ -549,16 +549,16 @@ public class App {
 //			attaque1.add(bDF);
 //			attaque2.add(bDF);
 //			cartes.add(foret);
-			attaque1 = Context.get_instance().getDaoAttaque().findAll();
-			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+//			attaque1 = Context.get_instance().getDaoAttaque().findAll();
+//			attaque2 = Context.get_instance().getDaoAttaque().findAll();
 //			jeuSolo();
-			menuPrincipal();
+//			menuPrincipal();
 //			Accueil ac = new Accueil();
-//			ac.setVisible(true);
+////			ac.setVisible(true);
 
 
 //			cartes.add(foret);
-			Accueil ac = new Accueil();
+			//Accueil ac = new Accueil();
 			Accueil.Accueil().setVisible(true);
 
 //			Context.get_instance().getEmf().close();

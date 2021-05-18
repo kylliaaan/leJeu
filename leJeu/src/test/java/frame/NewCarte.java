@@ -17,7 +17,7 @@ public class NewCarte extends Canvas implements Runnable{
 
 	public static final int WIDTH = 160;
 	public static final int HEIGTH = WIDTH/12*9;
-	public static final int scale = 3;
+	public static final int scale = 8;
 		
 	private JFrame frame;
 	
@@ -31,27 +31,27 @@ public class NewCarte extends Canvas implements Runnable{
 	static int y = 0;
 	static int tilesize=32;
 		
-	int[][] map =  {
-			{3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+	static int[][] map =  {
+			{8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8},
+			{8,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+			{8,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+			{8,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+			{8,0,0,0,8,8,8,8,8,0,0,0,8,8,8,8,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,0,8,0,0,8,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,8,8,0,0,8,0,0,0,8},
+			{8,0,0,0,1,0,0,0,0,0,0,0,0,0,0,8,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,8},
+			{8,0,0,0,0,8,0,0,0,0,0,0,0,0,0,8,8,8,8,8},
+			{8,0,0,0,0,8,0,0,8,0,0,0,0,0,0,0,0,0,0,8},
+			{8,0,0,0,0,0,0,0,8,0,0,0,0,0,0,4,0,0,0,8},
+			{8,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,8},
+			{8,0,0,0,0,8,0,0,8,0,0,0,0,0,0,0,0,0,0,8},
+			{8,8,8,8,8,8,0,0,8,0,0,0,0,0,0,0,2,0,0,8},
+			{8,0,0,0,0,0,0,0,8,8,8,8,8,0,0,0,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,8},
+			{8,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,8},
+			{8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8}
 			};
 	
 	
@@ -84,7 +84,7 @@ public class NewCarte extends Canvas implements Runnable{
 		frame.add(jpanel); 
 		
 		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(287, 567, 89, 23);
+		btnNewButton.setBounds(287, 567, 89, 28);
 		jpanel.add(btnNewButton); */
 		
 			
@@ -182,15 +182,15 @@ public class NewCarte extends Canvas implements Runnable{
 				
 				switch (rc){
 				case 0:
-					g.setColor(Color.GREEN);break; //Case vide
+					g.setColor(Color.WHITE);break; //Case vide
 				case 1:
 					g.setColor(Color.BLUE);break; //Joueur 1
 				case 2:
 					g.setColor(Color.RED);break; //Joueur 2
-				case 3:
-					g.setColor(Color.BLACK);break; //Obstacle haut
+				case 8:
+					g.setColor(Color.GRAY);break; //Obstacle haut
 				case 4:
-					g.setColor(Color.GRAY);break; //Obstacle bas
+					g.setColor(Color.BLACK);break; //Obstacle bas
 				}
 
 				g.fillRect((int) x +col * tilesize - 1, (int) y + ln * tilesize - 1, tilesize,tilesize);
@@ -203,9 +203,9 @@ public class NewCarte extends Canvas implements Runnable{
 		
 	}
 	
-	public static void main(String[] args) {
+	/* public static void main(String[] args) {
 	
 		new NewCarte().start();
-	}
+	}*/
 	
 }
