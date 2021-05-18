@@ -1,19 +1,15 @@
 package frame;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JEditorPane;
-import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
+import javax.swing.JRadioButtonMenuItem;
 
 public class NewGame{
 	
@@ -31,6 +27,13 @@ public class NewGame{
 		jf.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Commence ta game");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jf.dispose();
+				new NewCarte().start();
+				PanelDeJeu.PanelDeJeu().setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(244, 313, 142, 23);
 		jf.getContentPane().add(btnNewButton);
 		

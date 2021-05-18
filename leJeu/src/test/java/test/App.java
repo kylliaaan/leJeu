@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import frame.ChoixModes;
 import menuPrincipal.Accueil;
 import metier.Attaque;
 import metier.Carte;
@@ -72,8 +73,8 @@ public class App {
 		int choix= saisieInt("");
 		switch(choix) 
 		{
-		case 1 : seConnecter();break;
-		case 2 : nouveauCompte();break;
+//		case 1 : seConnecter();break;
+//		case 2 : nouveauCompte();break;
 		case 3 : Context.get_instance().getEmf().close();System.exit(0);break;
 		default : menuPrincipal();break;
 		}
@@ -81,33 +82,36 @@ public class App {
 
 
 
-	public static void seConnecter() {
-		String login = saisieString("Saisir votre nom d'utilisateur");
-		String password = saisieString("Saisir votre mot de passe");
+//	public static void seConnecter() {
+	public static void seConnecter(String login, String password) {
+//		String login = saisieString("Saisir votre nom d'utilisateur");
+//		String password = saisieString("Saisir votre mot de passe");
 		User user = Context.get_instance().getDaoUser().checkConnect(login, password);
 		if(user instanceof User)
 		{
 			//			String msg=login+" s'est connecte le : "+LocalDateTime.now()+"\n";
 			//			ecrireFichier("connect.txt",msg);
-			menuJeu();
+//			menuJeu();
+			ChoixModes.ChoixModes().setVisible(true);
 		}
 		else 
 		{
 			//			String msg=login+" erreur de connexion le : "+LocalDateTime.now()+"\n";
 			//			ecrireFichier("errorConnect.txt",msg);
 			//			System.out.println("Identifiants invalides");
-			System.out.println("\nIdentifiants invalides.\n");
-			menuPrincipal();
+//			System.out.println("\nIdentifiants invalides.\n");
+//			menuPrincipal();
+			Accueil.Accueil().setVisible(true);
 		}
 	}
 
-	private static void nouveauCompte() {
-		String login = saisieString("Choisissez un nom d'utilisateur");
-		String password = saisieString("Choisissez un mot de passe");
+	public static void nouveauCompte(String login, String password) {
+//		String login = saisieString("Choisissez un nom d'utilisateur");
+//		String password = saisieString("Choisissez un mot de passe");
 
 		User newUser = new User(login,password);
 		Context.get_instance().getDaoUser().save(newUser);
-		menuPrincipal();
+//		menuPrincipal();
 	}
 
 	public static void menuJeu() {
@@ -354,7 +358,7 @@ public class App {
 		if(j==joueur1) {cible=joueur2;}
 		else if(j==joueur2) {cible=joueur1;}
 		Attaque.calculDegat(j,cible, attaques.get(choix));
-//		j.setpA(j.getpA()-attaques.get(choix).getpA()); //nouveaux PA d�j� calcul�s dans calculDegats()
+//		j.setpA(j.getpA()-attaques.get(choix).getpA()); //nouveaux PA deja calcules dans calculDegats()
 		if (nombreJoueur == 2) {
 		System.out.println("HP Joueur 1 : "+joueur1.gethP()+" | HP Joueur 2 : "+joueur2.gethP());}
 		else if (nombreJoueur == 1) {
@@ -362,7 +366,7 @@ public class App {
 		}
 
 		private static void afficherAttaques(Personnage j) {
-			List<Attaque> attaques = new ArrayList<Attaque>();	
+			List<Attaque> attaques = new ArrayList<Attaque>();
 			if (j==joueur1) {attaques=attaque1;}
 			else if  (j==joueur2) {attaques=attaque2;}
 			for (int i= 0; i<attaques.size();i++) {	
@@ -390,7 +394,7 @@ public class App {
 
 		public static void afficherCartePlacement(Personnage j,Carte c,int [][] obstacles) {
 			int map[][] = new int[c.getX()][c.getY()];
-			for ( int ln = 0; ln < c.getX(); ln++) //pas d'obstacle sur les 4 positions de d�part
+			for ( int ln = 0; ln < c.getX(); ln++)
 			{
 				for ( int col = 0; col < c.getY(); col++) 
 				{
@@ -533,27 +537,27 @@ public class App {
 			 */
 			
 			
-			attaque1.add(cDP);
-			attaque2.add(cDP);
-			attaque1.add(cDB);
-			attaque2.add(cDB);
-			attaque1.add(bM);
-			attaque2.add(bM);
-			attaque1.add(bDF);
-			attaque2.add(bDF);
+//			attaque1.add(cDP);
+//			attaque2.add(cDP);
+//			attaque1.add(cDB);
+//			attaque2.add(cDB);
+//			attaque1.add(bM);
+//			attaque2.add(bM);
+//			attaque1.add(bDF);
+//			attaque2.add(bDF);
 			cartes.add(foret);
-//			attaque1 = Context.get_instance().getDaoAttaque().findAll();
-//			attaque2 = Context.get_instance().getDaoAttaque().findAll();
+			attaque1 = Context.get_instance().getDaoAttaque().findAll();
+			attaque2 = Context.get_instance().getDaoAttaque().findAll();
 //			jeuSolo();
-			menuPrincipal();
+//			menuPrincipal();
 //			Accueil ac = new Accueil();
 //			ac.setVisible(true);
 
 
 //			cartes.add(foret);
-			Accueil ac = new Accueil();
+//			Accueil ac = new Accueil();
 			Accueil.Accueil().setVisible(true);
-
+			
 //			Context.get_instance().getEmf().close();
 		} 
 	}

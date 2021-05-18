@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import frame.Credits;
 import frame.NewCompte;
 import frame.Seconnecter;
+import test.App;
 
 import java.awt.Font;
 
@@ -27,13 +28,13 @@ public class Accueil {
 	public static JFrame Accueil() {
 		
 		jf = new JFrame("A LA RECHERCHE DU SOPRA");
+		jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		jf.setBounds(400, 200, 650, 500);
 		jf.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("SE CONNECTER");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				Seconnecter.Seconnecter().setVisible(true);
 				jf.dispose();
 				

@@ -54,7 +54,7 @@ public class ChoixModes extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jf.dispose();
-				Accueil.Accueil().setVisible(true);;
+				Accueil.Accueil().setVisible(true);
 				
 			}
 		});
